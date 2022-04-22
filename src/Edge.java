@@ -4,7 +4,7 @@ public class Edge {
     private Object destination;
     private String name;
     private double weight;
-    
+
     public Object getDestination() {
         return destination;
     }
