@@ -1,18 +1,24 @@
+import java.util.Objects;
 public class Edge {
-    public void getDestination() {
 
+    private Object destination;
+    private String name;
+    private double weight;
+    
+    public Object getDestination() {
+        return destination;
     }
 
-    public void getWeight() {
-
+    public double getWeight() {
+        return weight;
     }
 
     public void setWeight() {
 
     }
 
-    public void getName() {
-
+    public String getName() {
+        return name;
     }
 
     public String toString() {
