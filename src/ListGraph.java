@@ -11,4 +11,27 @@ public class ListGraph {
     public void disconnect(){
 
     }
+    public void setConnectionWeight(){
+
+    }
+    public void getNodes(){
+
+    }
+    public void getEdgesFrom(){
+
+    }
+    public void getEdgeBetween(){
+
+    }
+    public void pathExists(){
+
+    }
+    public void getPath(){
+
+    }
+
+    /*public void toString(){
+
+    }
+*/
 }
