@@ -30,8 +30,7 @@ public class ListGraph {
 
     }
 
-    /*public void toString(){
-
+    public String toString(){
+        return "LOL";
     }
-*/
 }
