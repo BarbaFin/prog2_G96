@@ -189,6 +189,6 @@ public class I1 {
 	private void tests_finished() {
 		System.out.printf("%n ==> No exceptions thrown so all tests passed. <== %n");
 	}
-	
+
 	 */
 }
