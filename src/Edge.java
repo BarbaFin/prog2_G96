@@ -32,7 +32,9 @@ public class Edge {
     }
 
     public String toString() {
-        return "test";
+        return "destination = " + destination +
+                ", name = '" + name + '\'' +
+                ", weight = " + weight ;
     }
 
 }
