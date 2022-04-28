@@ -2,6 +2,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.NoSuchElementException;
 
 public class ListGraph {
 
@@ -11,7 +12,12 @@ public class ListGraph {
             nodes.putIfAbsent(town, new HashSet<>());
     }
     public void remove(Town town){
-        nodes.remove(town);
+        if (!nodes.containsKey(town)) {
+            throw new NoSuchElementException();
+        }else {
+            nodes.remove(town);
+        }
+
     }
     public void connect(){
 
