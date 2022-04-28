@@ -15,6 +15,6 @@ public class Test {
         graph.add(köpenhamn);
         graph.add(berlin);
 
-        System.out.println("Hello world!");
+        System.out.println(graph);
     }
 }

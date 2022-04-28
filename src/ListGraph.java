@@ -39,6 +39,10 @@ public class ListGraph {
     }
 
     public String toString(){
-        return "LOL";
+        StringBuilder sb = new StringBuilder();
+        for (Town town : nodes.keySet()) {
+            sb.append(town).append(": ").append(nodes.get(town)).append("\n");
+        }
+        return sb.toString();
     }
 }
