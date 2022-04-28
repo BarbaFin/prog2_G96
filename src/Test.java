@@ -1,11 +1,11 @@
 public class Test {
     public static void main(String[] args) {
-        City stockholm = new City("Stockholm");
-        City malmö = new City("Malmö");
-        City oslo = new City("Oslo");
-        City kiruna = new City("Kiruna");
-        City köpenhamn = new City("Köpenhamn");
-        City berlin = new City("Berlin");
+        Town stockholm = new Town("Stockholm");
+        Town malmö = new Town("Malmö");
+        Town oslo = new Town("Oslo");
+        Town kiruna = new Town("Kiruna");
+        Town köpenhamn = new Town("Köpenhamn");
+        Town berlin = new Town("Berlin");
 
         ListGraph graph = new ListGraph();
         graph.add(stockholm);

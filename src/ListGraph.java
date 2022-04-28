@@ -1,6 +1,14 @@
-public class ListGraph {
-    public void add(){
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
+public class ListGraph {
+
+    private final Map<Town, Set<Edge>> nodes = new HashMap<>();
+
+    public void add(Town town){
+            nodes.putIfAbsent(town, new HashSet<>());
     }
     public void remove(){
 
