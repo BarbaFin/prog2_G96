@@ -26,9 +26,12 @@ public class ListGraph {
         Set<Edge> xTownEdge = nodes.get(x);
         Set<Edge> yTownEdge = nodes.get(y);
 
+        if (x == null || y == null) {
+            throw new NoSuchElementException();
+        }
+
         xTownEdge.add(new Edge(x, name, weight));
         yTownEdge.add(new Edge(y, name, weight));
-
     }
     public void disconnect(){
 
