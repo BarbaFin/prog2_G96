@@ -20,19 +20,18 @@ public class ListGraph {
     public void connect(Town x, Town y, String name, double weight){
         if (!nodes.containsKey(x) || !nodes.containsKey(y)) {
             throw new NoSuchElementException();
-        } else {
+        }
+        //Det ska in en till exception här!
+        else {
             add(x);
             add(y);
 
             Set<Edge> xTownEdge = nodes.get(x);
             Set<Edge> yTownEdge = nodes.get(y);
 
-
-
             xTownEdge.add(new Edge(x, name, weight));
             yTownEdge.add(new Edge(y, name, weight));
         }
-
     }
     public void disconnect(){
 
