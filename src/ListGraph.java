@@ -4,6 +4,11 @@ import java.util.Map;
 import java.util.Set;
 
 public class ListGraph {
+<<<<<<< Updated upstream
+=======
+
+    public void add(){
+>>>>>>> Stashed changes
 
     private final Map<Town, Set<Edge>> nodes = new HashMap<>();
 
