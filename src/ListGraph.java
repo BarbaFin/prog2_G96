@@ -1,8 +1,4 @@
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
-import java.util.NoSuchElementException;
+import java.util.*;
 
 public class ListGraph {
 
@@ -18,9 +14,13 @@ public class ListGraph {
             nodes.remove(town);
         }
 
+
+
     }
     public void connect(Town x, Town y, String name, double weight){
-        if (nodes.containsKey(x) && nodes.containsKey(y)) {
+        if (!nodes.containsKey(x) || !nodes.containsKey(y)) {
+            throw new NoSuchElementException();
+        } else {
             add(x);
             add(y);
 
@@ -31,8 +31,6 @@ public class ListGraph {
 
             xTownEdge.add(new Edge(x, name, weight));
             yTownEdge.add(new Edge(y, name, weight));
-        } else {
-            throw new NoSuchElementException();
         }
 
     }

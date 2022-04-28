@@ -15,7 +15,7 @@ public class Test {
         graph.add(köpenhamn);
         graph.add(berlin);
 
-        graph.remove(kiruna);
+        //graph.remove(kiruna);
 
         graph.connect(stockholm,malmö, "e20", 10);
         graph.connect(stockholm, kiruna, "väg", 1);
