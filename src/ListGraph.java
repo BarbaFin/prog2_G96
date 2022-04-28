@@ -10,8 +10,8 @@ public class ListGraph {
     public void add(Town town){
             nodes.putIfAbsent(town, new HashSet<>());
     }
-    public void remove(){
-
+    public void remove(Town town){
+        nodes.remove(town);
     }
     public void connect(){
 
@@ -39,10 +39,11 @@ public class ListGraph {
     }
 
     public String toString(){
-        StringBuilder sb = new StringBuilder();
+        StringBuilder builder = new StringBuilder();
+
         for (Town town : nodes.keySet()) {
-            sb.append(town).append(": ").append(nodes.get(town)).append("\n");
+            builder.append(town).append(": ").append(nodes.get(town)).append("\n");
         }
-        return sb.toString();
+        return builder.toString();
     }
 }

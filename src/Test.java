@@ -15,6 +15,8 @@ public class Test {
         graph.add(köpenhamn);
         graph.add(berlin);
 
+        graph.remove(kiruna);
+
         System.out.println(graph);
     }
 }
