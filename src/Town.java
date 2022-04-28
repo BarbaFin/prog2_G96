@@ -5,4 +5,9 @@ public class Town {
     public Town(String name) {
         this.name = name;
     }
+
+    public String toString() {
+        return name;
+    }
+
 }
