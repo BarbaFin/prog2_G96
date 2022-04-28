@@ -20,9 +20,7 @@ public class ListGraph {
 
     }
     public void connect(Town x, Town y, String name, double weight){
-        if (x == null || y == null) {
-            throw new NoSuchElementException();
-        } else {
+        if (nodes.containsKey(x) && nodes.containsKey(y)) {
             add(x);
             add(y);
 
@@ -33,6 +31,8 @@ public class ListGraph {
 
             xTownEdge.add(new Edge(x, name, weight));
             yTownEdge.add(new Edge(y, name, weight));
+        } else {
+            throw new NoSuchElementException();
         }
 
     }
