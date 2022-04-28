@@ -17,7 +17,7 @@ public class Test {
 
         //graph.remove(kiruna);
 
-        graph.connect(stockholm,malmö, "e20", 10);
+        graph.connect(stockholm, malmö, "e20", 10);
         graph.connect(stockholm, kiruna, "väg", 1);
 
         System.out.println(graph);

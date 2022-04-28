@@ -16,12 +16,10 @@ public class Edge {
     }
 
     public Object getDestination() {
-
         return destination;
     }
 
     public double getWeight() {
-
         return weight;
     }
 
