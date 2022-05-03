@@ -22,6 +22,8 @@ public class Test {
 
         graph.setConnectionWeight(stockholm, malmö, 20);
 
+        graph.getEdgeBetween(stockholm, malmö);
+
         System.out.println(graph);
     }
 }

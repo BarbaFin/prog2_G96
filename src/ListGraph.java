@@ -39,7 +39,7 @@ public class ListGraph {
     public void getEdgesFrom(){
 
     }
-    private Edge getEdgeBetween(Town next, Town current) {
+    public Edge getEdgeBetween(Town next, Town current) {
         for (Edge edge : nodes.get(next)) {
             if (edge.getDestination().equals(current)) {
                 return edge;
