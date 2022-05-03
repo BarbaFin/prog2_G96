@@ -30,7 +30,7 @@ public class ListGraph {
     public void disconnect(Town x, Town y){
 
     }
-    public void setConnectionWeight(){
+    public void setConnectionWeight(Town x, Town y, double weight){
 
     }
     public void getNodes(){
