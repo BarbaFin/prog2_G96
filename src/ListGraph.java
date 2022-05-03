@@ -13,9 +13,6 @@ public class ListGraph {
         }else {
             nodes.remove(town);
         }
-
-
-
     }
     public void connect(Town x, Town y, String name, double weight){
         if (!nodes.containsKey(x) || !nodes.containsKey(y)) {
@@ -30,7 +27,7 @@ public class ListGraph {
             yTownEdge.add(new Edge(x, name, weight));
         }
     }
-    public void disconnect(){
+    public void disconnect(Town x, Town y){
 
     }
     public void setConnectionWeight(){
