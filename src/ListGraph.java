@@ -37,7 +37,7 @@ public class ListGraph {
 
     }
     public void getNodes(){
-
+        HashMap<Town, Set<Edge>> nodesCopy = new HashMap<>();
     }
     public void getEdgesFrom(){
 
