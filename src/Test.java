@@ -24,6 +24,8 @@ public class Test {
 
         graph.getEdgeBetween(stockholm, malmö);
 
+        
+
         System.out.println(graph);
     }
 }

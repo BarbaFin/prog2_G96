@@ -28,6 +28,8 @@ public class ListGraph {
         }
     }
     public void disconnect(Town x, Town y){
+        Set<Edge> xTownEdge = nodes.get(x);
+        Set<Edge> yTownEdge = nodes.get(y);
 
     }
     public void setConnectionWeight(Town x, Town y, double weight){
