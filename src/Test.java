@@ -20,11 +20,12 @@ public class Test {
         graph.connect(stockholm, malmö, "e20", 10);
         graph.connect(stockholm, kiruna, "väg", 1);
 
+        graph.disconnect(stockholm, kiruna);
         graph.setConnectionWeight(stockholm, malmö, 20);
 
         graph.getEdgeBetween(stockholm, malmö);
 
-        
+
 
         System.out.println(graph);
     }
