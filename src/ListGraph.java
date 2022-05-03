@@ -39,8 +39,13 @@ public class ListGraph {
     public void getEdgesFrom(){
 
     }
-    public void getEdgeBetween(){
-
+    private Edge getEdgeBetween(Town next, Town current) {
+        for (Edge edge : nodes.get(next)) {
+            if (edge.getDestination().equals(current)) {
+                return edge;
+            }
+        }
+        return null;
     }
     public void pathExists(){
 
