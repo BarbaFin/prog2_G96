@@ -1,7 +1,7 @@
 import java.util.Objects;
 public class Edge {
 
-    private Object destination;
+    private Town destination;
     private String name;
     private double weight;
 
@@ -15,7 +15,7 @@ public class Edge {
         this.weight = weight;
     }
 
-    public Object getDestination() {
+    public Town getDestination() {
         return destination;
     }
 

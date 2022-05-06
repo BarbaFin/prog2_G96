@@ -28,6 +28,9 @@ public class ListGraph {
         }
     }
     public void disconnect(Town x, Town y){
+        if (nodes.containsKey(x) && nodes.containsKey(y)) {
+
+        }
         Set<Edge> xTownEdge = nodes.get(x);
         Set<Edge> yTownEdge = nodes.get(y);
 
@@ -44,8 +47,12 @@ public class ListGraph {
     public void getNodes(){
         HashMap<Town, Set<Edge>> nodesCopy = new HashMap<>();
     }
-    public void getEdgesFrom(){
+    public void getEdgesFrom(Town town){
+        if (nodes.containsKey(town)) {
 
+        } else {
+            throw new NoSuchElementException();
+        }
     }
     public Edge getEdgeBetween(Town next, Town current) {
         for (Edge edge : nodes.get(next)) {
@@ -55,11 +62,30 @@ public class ListGraph {
         }
         return null;
     }
-    public void pathExists(){
-
+    public boolean pathExists(Town a, Town b){
+        Set<Town> visited = new HashSet<>();
+        depthFirstVisitAll(a, visited);
+        return visited.contains(b);
     }
-    public void getPath(){
+    public List<Edge> getPath(Town from, Town to, Map<Town, Town> connection) {
+        LinkedList<Edge> path = new LinkedList<>();
+        Town current = to;
+        while (!current.equals(from)) {
+            Town next = connection.get(current);
+            Edge edge = getEdgeBetween(next, current);
+            path.addFirst(edge);
+            current = next;
+        }
+        return Collections.unmodifiableList(path);
+    }
 
+    private void depthFirstVisitAll(Town current, Set<Town> visited) {
+        visited.add(current);
+        for (Edge edge : nodes.get(current)) {
+            if (!visited.contains(edge.getDestination())) {
+                depthFirstVisitAll(edge.getDestination(), visited);
+            }
+        }
     }
 
     public String toString(){
