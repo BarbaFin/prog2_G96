@@ -34,7 +34,7 @@ public class ListGraph {
         yTownEdge.remove(nodes.get(x));
         xTownEdge.remove(nodes.get(y));
 
-         System.out.println(": " + yTownEdge);
+         System.out.println(": " + xTownEdge);
 
     }
     public void setConnectionWeight(Town x, Town y, double weight){
