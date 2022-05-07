@@ -28,7 +28,7 @@ public class ListGraph {
         }
     }
     public void disconnect(Town next, Town current){
-        //if (nodes.containsKey(x) && nodes.containsKey(y)) {
+        //if (nodes.containsKey(next) && nodes.containsKey(current)) {
 
         //}
         //Set<Edge> xTownEdge = nodes.get(x);
