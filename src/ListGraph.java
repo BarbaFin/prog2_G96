@@ -27,19 +27,13 @@ public class ListGraph {
             yTownEdge.add(new Edge(x, name, weight));
         }
     }
-    public void disconnect(Town x, Town y){
-        //if (nodes.containsKey(next) && nodes.containsKey(current)) {
-
-        //}
-        //Set<Edge> xTownEdge = nodes.get(x);
-        //Set<Edge> yTownEdge = nodes.get(y);
-
-        //yTownEdge.remove(nodes.get(x));
-        //xTownEdge.remove(nodes.get(y));
-
-        //System.out.println(": " + xTownEdge);
-        //System.out.println(": " + yTownEdge);
+    public void disconnect(Town x, Town y) {
+        for (Edge edge : nodes.get(x)) {
+            if (edge.getDestination().equals(y)) {
+                nodes.remove(edge);
+            }
         }
+    }
     public void setConnectionWeight(Town x, Town y, double weight) {
         if (nodes.containsKey(x) && nodes.containsKey(y)) {
             if (weight >= 0) {
@@ -57,7 +51,7 @@ public class ListGraph {
     public Edge getEdgesFrom(Town town){
         if (nodes.containsKey(town)) {
             for (Edge edge : nodes.get(town)) {
-                        return edge;
+                return edge;
             }
         } else {
             throw new NoSuchElementException();
