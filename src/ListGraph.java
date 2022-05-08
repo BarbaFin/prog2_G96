@@ -55,7 +55,7 @@ public class ListGraph {
         HashMap<Town, Set<Edge>> nodesCopy = new HashMap<>();
     }
     public Edge getEdgesFrom(Town town){
-        //if (nodes.containsKey(town)) {
+        if (nodes.containsKey(town)) {
             for (Edge edge : nodes.get(town)) {
                 for (Edge edgeToTown : nodes.get(edge.getDestination())) {
                     if (edgeToTown.getDestination().equals(town)) {
@@ -63,11 +63,10 @@ public class ListGraph {
                     }
                 }
             }
-            return null;
-        //} else {
-        //    throw new NoSuchElementException();
-        //}
-        //return null;
+        } else {
+            throw new NoSuchElementException();
+        }
+        return null;
     }
     public Edge getEdgeBetween(Town next, Town current) {
         for (Edge edge : nodes.get(next)) {
