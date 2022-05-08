@@ -27,7 +27,7 @@ public class ListGraph {
             yTownEdge.add(new Edge(x, name, weight));
         }
     }
-    public void disconnect(Town next, Town current){
+    public void disconnect(Town T){
         //if (nodes.containsKey(next) && nodes.containsKey(current)) {
 
         //}
@@ -40,6 +40,14 @@ public class ListGraph {
         //System.out.println(": " + xTownEdge);
         //System.out.println(": " + yTownEdge);
 
+        //for (Edge edge : nodes.get(T)) {
+        //    for (Edge edgeToRemove : nodes.get(edge.getDestination())) {
+        //        if (edgeToRemove.getDestination().equals(T)) {
+        //            nodes.get(edge.getDestination()).remove(edgeToRemove);
+        //            break;
+        //        }
+        //    }
+        //}
     }
     public void setConnectionWeight(Town x, Town y, double weight){
 
