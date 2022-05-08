@@ -57,11 +57,7 @@ public class ListGraph {
     public Edge getEdgesFrom(Town town){
         if (nodes.containsKey(town)) {
             for (Edge edge : nodes.get(town)) {
-                for (Edge edgeToTown : nodes.get(edge.getDestination())) {
-                    if (edgeToTown.getDestination().equals(town)) {
-                        return edgeToTown;
-                    }
-                }
+                        return edge;
             }
         } else {
             throw new NoSuchElementException();
