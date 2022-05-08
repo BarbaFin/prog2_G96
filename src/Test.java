@@ -29,6 +29,6 @@ public class Test {
 
         //System.out.println(graph.getNodes());
 
-        System.out.println(graph);
+        System.out.println(graph.getNodes());
     }
 }

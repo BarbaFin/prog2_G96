@@ -43,8 +43,8 @@ public class ListGraph {
             throw new NoSuchElementException();
         }
     }
-    public void getNodes() {
-
+    public Set<Town> getNodes() {
+        return Set.copyOf(nodes.keySet());
     }
     public List<Edge> getEdgesFrom(Town town){
         LinkedList<Edge> edges = new LinkedList<>();
