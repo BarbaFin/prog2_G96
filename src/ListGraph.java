@@ -50,7 +50,7 @@ public class ListGraph {
         //}
     }
     public void setConnectionWeight(Town x, Town y, double weight) {
-        //getEdgeBetween(x,y).setWeight(weight) = new weight???;
+        getEdgeBetween(x,y).setWeight(weight);
     }
     public void getNodes(){
         HashMap<Town, Set<Edge>> nodesCopy = new HashMap<>();
