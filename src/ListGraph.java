@@ -27,7 +27,7 @@ public class ListGraph {
             yTownEdge.add(new Edge(x, name, weight));
         }
     }
-    public void disconnect(Town T){
+    public void disconnect(Town x, Town y){
         //if (nodes.containsKey(next) && nodes.containsKey(current)) {
 
         //}
@@ -39,16 +39,7 @@ public class ListGraph {
 
         //System.out.println(": " + xTownEdge);
         //System.out.println(": " + yTownEdge);
-
-        //for (Edge edge : nodes.get(T)) {
-        //    for (Edge edgeToRemove : nodes.get(edge.getDestination())) {
-        //        if (edgeToRemove.getDestination().equals(T)) {
-        //            nodes.get(edge.getDestination()).remove(edgeToRemove);
-        //            break;
-        //        }
-        //    }
-        //}
-    }
+        }
     public void setConnectionWeight(Town x, Town y, double weight) {
         if (nodes.containsKey(x) && nodes.containsKey(y)) {
             if (weight >= 0) {
@@ -59,17 +50,24 @@ public class ListGraph {
         } else {
             throw new NoSuchElementException();
         }
-
     }
     public void getNodes(){
         HashMap<Town, Set<Edge>> nodesCopy = new HashMap<>();
     }
-    public void getEdgesFrom(Town town){
-        if (nodes.containsKey(town)) {
-
-        } else {
-            throw new NoSuchElementException();
-        }
+    public Edge getEdgesFrom(Town town){
+        //if (nodes.containsKey(town)) {
+            for (Edge edge : nodes.get(town)) {
+                for (Edge edgeToTown : nodes.get(edge.getDestination())) {
+                    if (edgeToTown.getDestination().equals(town)) {
+                        return edgeToTown;
+                    }
+                }
+            }
+            return null;
+        //} else {
+        //    throw new NoSuchElementException();
+        //}
+        //return null;
     }
     public Edge getEdgeBetween(Town next, Town current) {
         for (Edge edge : nodes.get(next)) {
