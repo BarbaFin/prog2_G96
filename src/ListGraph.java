@@ -27,8 +27,14 @@ public class ListGraph {
             yTownEdge.add(new Edge(x, name, weight));
         }
     }
+
     public void disconnect(Town x, Town y) {
-            nodes.remove(getEdgeBetween(x,y));
+        Set<Edge> xTownEdge = nodes.get(x);
+        Set<Edge> yTownEdge = nodes.get(y);
+
+        xTownEdge.remove(y);
+        yTownEdge.remove(x);
+        //System.out.println("TEST" + yTownEdge);
         }
 
     public void setConnectionWeight(Town x, Town y, double weight) {
@@ -45,6 +51,7 @@ public class ListGraph {
     public Set<Town> getNodes() {
         return Set.copyOf(nodes.keySet());
     }
+
     public List<Edge> getEdgesFrom(Town town){
         LinkedList<Edge> edges = new LinkedList<>();
         if (nodes.containsKey(town)) {

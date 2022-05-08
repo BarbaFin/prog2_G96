@@ -1,4 +1,4 @@
-
+/*
 import java.util.NoSuchElementException;
 
 /**
@@ -11,8 +11,10 @@ import java.util.NoSuchElementException;
  * <p>
  * Filen ska inte lämnas in.
  */
+
+/*
 public class I1 {
-	/*
+
 	private static final double VERSION = 1.1;
 	private static final String UPDATED = "2021-04-15";
 
@@ -190,5 +192,8 @@ public class I1 {
 		System.out.printf("%n ==> No exceptions thrown so all tests passed. <== %n");
 	}
 
-	 */
+
 }
+
+
+ */
