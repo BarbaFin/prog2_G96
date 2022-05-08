@@ -32,8 +32,8 @@ public class ListGraph {
         Set<Edge> xTownEdge = nodes.get(x);
         Set<Edge> yTownEdge = nodes.get(y);
 
-        xTownEdge.remove(y);
-        yTownEdge.remove(x);
+        nodes.get(x).remove(y);
+        nodes.get(y).remove(x);
         //System.out.println("TEST" + yTownEdge);
         }
 
