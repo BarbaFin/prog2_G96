@@ -43,8 +43,8 @@ public class ListGraph {
             throw new NoSuchElementException();
         }
     }
-    public void getNodes(){
-        HashMap<Town, Set<Edge>> nodesCopy = new HashMap<>();
+    public void getNodes() {
+
     }
     public List<Edge> getEdgesFrom(Town town){
         LinkedList<Edge> edges = new LinkedList<>();

@@ -27,8 +27,8 @@ public class Test {
 
         //graph.disconnect(stockholm, malmö);
 
-        System.out.println(graph.getEdgesFrom(stockholm));
+        //System.out.println(graph.getNodes());
 
-        //System.out.println(graph);
+        System.out.println(graph);
     }
 }
