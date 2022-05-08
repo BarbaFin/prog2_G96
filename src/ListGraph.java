@@ -46,15 +46,16 @@ public class ListGraph {
     public void getNodes(){
         HashMap<Town, Set<Edge>> nodesCopy = new HashMap<>();
     }
-    public Edge getEdgesFrom(Town town){
+    public List<Edge> getEdgesFrom(Town town){
+        LinkedList<Edge> edges = new LinkedList<>();
         if (nodes.containsKey(town)) {
             for (Edge edge : nodes.get(town)) {
-                return edge;
+                edges.add(edge);
             }
         } else {
             throw new NoSuchElementException();
         }
-        return null;
+        return edges;
     }
     public Edge getEdgeBetween(Town next, Town current) {
         for (Edge edge : nodes.get(next)) {
