@@ -21,7 +21,7 @@ public class Test {
         graph.connect(stockholm, kiruna, "väg", 1);
 
         graph.disconnect(stockholm);
-        graph.setConnectionWeight(stockholm,kiruna, 40.0);
+        graph.setConnectionWeight(stockholm,kiruna, 35.0);
 
         //graph.getEdgeBetween(stockholm, malmö);
 

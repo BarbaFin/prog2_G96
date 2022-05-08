@@ -50,7 +50,16 @@ public class ListGraph {
         //}
     }
     public void setConnectionWeight(Town x, Town y, double weight) {
-        getEdgeBetween(x,y).setWeight(weight);
+        if (nodes.containsKey(x) && nodes.containsKey(y)) {
+            if (weight >= 0) {
+                getEdgeBetween(x,y).setWeight(weight);
+            } else {
+                throw new IllegalArgumentException("Weight cant be negative");
+            }
+        } else {
+            throw new NoSuchElementException();
+        }
+
     }
     public void getNodes(){
         HashMap<Town, Set<Edge>> nodesCopy = new HashMap<>();
