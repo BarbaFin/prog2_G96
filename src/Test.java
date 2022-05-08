@@ -25,10 +25,10 @@ public class Test {
 
         //graph.getEdgeBetween(stockholm, malmö);
 
-        //graph.disconnect(stockholm, malmö);
+        graph.disconnect(stockholm, malmö);
 
         //System.out.println(graph.getNodes());
 
-        System.out.println(graph.getNodes());
+        System.out.println(graph);
     }
 }

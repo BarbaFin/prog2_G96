@@ -28,8 +28,7 @@ public class ListGraph {
         }
     }
     public void disconnect(Town x, Town y) {
-            Edge edge = getEdgeBetween(x,y);
-            nodes.remove(edge);
+            nodes.remove(getEdgeBetween(x,y));
         }
 
     public void setConnectionWeight(Town x, Town y, double weight) {
