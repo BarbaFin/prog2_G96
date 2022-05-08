@@ -23,9 +23,9 @@ public class Test {
         //graph.disconnect(stockholm);
         //graph.setConnectionWeight(stockholm,kiruna, 35.0);
 
-        //graph.getEdgeBetween(stockholm, malmö);
+        graph.getEdgeBetween(stockholm, malmö);
 
-        graph.disconnect(stockholm, malmö);
+        //graph.disconnect(stockholm, malmö);
 
         //System.out.println(graph.getEdgesFrom(stockholm));
 
