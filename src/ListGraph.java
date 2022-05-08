@@ -28,12 +28,10 @@ public class ListGraph {
         }
     }
     public void disconnect(Town x, Town y) {
-        for (Edge edge : nodes.get(x)) {
-            if (edge.getDestination().equals(y)) {
-                nodes.remove(edge);
-            }
+            Edge edge = getEdgeBetween(x,y);
+            nodes.remove(edge);
         }
-    }
+
     public void setConnectionWeight(Town x, Town y, double weight) {
         if (nodes.containsKey(x) && nodes.containsKey(y)) {
             if (weight >= 0) {
