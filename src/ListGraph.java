@@ -52,7 +52,7 @@ public class ListGraph<T> implements Graph<T> {
             if (weight >= 0) {
                 getEdgeBetween(x,y).setWeight(weight);
             } else {
-                throw new IllegalArgumentException("Weight cant be negative");
+                throw new IllegalArgumentException();
             }
         } else {
             throw new NoSuchElementException();
@@ -84,13 +84,13 @@ public class ListGraph<T> implements Graph<T> {
         }
         return null;
     }
-    public boolean pathExists(T a, T b){
-        if(nodes.get(a) == null || nodes.get(b) == null){
+    public boolean pathExists(T x, T y){
+        if(nodes.get(x) == null || nodes.get(y) == null){
             return false;
         }
         Set<T> visited = new HashSet<>();
-        depthFirstVisitAll(a, visited);
-        return visited.contains(b);
+        depthFirstVisitAll(x, visited);
+        return visited.contains(y);
     }
 
     //FEL, SKA RETURNERA EN VÄG
