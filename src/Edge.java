@@ -31,7 +31,6 @@ public class Edge<T> {
         return name;
     }
 
-    //Fel av någon anlednig
     public String toString() {
         return "till " + destination + " med " + name + " tar " + weight;
     }

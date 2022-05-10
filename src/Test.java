@@ -29,8 +29,9 @@ public class Test {
 
         //graph.getEdgeBetween(stockholm, malmö);
 
-        graph.disconnect(oslo, berlin);
+        //graph.disconnect(oslo, berlin);
 
+        graph.remove(stockholm);
         //System.out.println(graph.getNodes());
 
         System.out.println(graph);
