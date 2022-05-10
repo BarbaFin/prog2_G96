@@ -79,6 +79,12 @@ public class ListGraph<T> implements Graph<T> {
         depthFirstVisitAll(a, visited);
         return visited.contains(b);
     }
+
+    @Override
+    public List<Edge<T>> getPath(T from, T to) {
+        return null;
+    }
+
     public List<Edge<T>> getPath(T from, T to, Map<T, T> connection) {
         LinkedList<Edge<T>> path = new LinkedList<>();
         T current = to;
@@ -100,6 +106,7 @@ public class ListGraph<T> implements Graph<T> {
         }
     }
 
+    @Override
     public String toString(){
         StringBuilder builder = new StringBuilder();
 
