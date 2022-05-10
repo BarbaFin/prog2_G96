@@ -7,23 +7,21 @@ public class ListGraph<T> implements Graph<T> {
             nodes.putIfAbsent(t, new HashSet<>());
     }
 
-    //FEL, KOLLA MODULEN
     public void remove(T t) {
-        if (!nodes.containsKey(t)) {
+        if (nodes.containsKey(t)) {
+            for(T q : nodes.keySet()){
+                getEdgeBetween(q,t);
+                if(getEdgeBetween(q,t) == null){
+
+                }else{
+                    removeDisconnet(q,t);
+                }
+            }
+            nodes.remove(t);
+        }else {
             throw new NoSuchElementException();
         }
-
-        for(T q : nodes.keySet()){
-            getEdgeBetween(q,t);
-            if(getEdgeBetween(q,t) == null){
-
-            }else{
-                removeDisconnet(q,t);
-            }
-        }
-        nodes.remove(t);
     }
-
 
     public void connect(T x, T y, String name, int weight){
         if (!nodes.containsKey(x) || !nodes.containsKey(y)) {
@@ -91,10 +89,10 @@ public class ListGraph<T> implements Graph<T> {
         return edges;
     }
     public Edge<T> getEdgeBetween(T next, T current) {
+        if(nodes.get(next) == null || nodes.get(current) == null){
+            throw new NoSuchElementException();
+        }
         for (Edge<T> edge : nodes.get(next)) {
-            if(nodes.get(next) == null || nodes.get(current) == null){
-                throw new NoSuchElementException();
-            }
             if (edge.getDestination().equals(current)) {
                 return edge;
             }

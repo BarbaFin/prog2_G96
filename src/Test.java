@@ -32,6 +32,7 @@ public class Test {
         //graph.disconnect(oslo, berlin);
 
         graph.remove(stockholm);
+        graph.getEdgeBetween(stockholm,malmö);
         //System.out.println(graph.getNodes());
 
         System.out.println(graph);
