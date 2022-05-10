@@ -73,6 +73,9 @@ public class ListGraph<T> implements Graph<T> {
     }
     public Edge<T> getEdgeBetween(T next, T current) {
         for (Edge<T> edge : nodes.get(next)) {
+            if(nodes.get(next) == null || nodes.get(current) == null){
+                throw new NoSuchElementException();
+            }
             if (edge.getDestination().equals(current)) {
                 return edge;
             }
