@@ -99,19 +99,23 @@ public class ListGraph<T> implements Graph<T> {
     @Override
     public List<Edge<T>> getPath(T from, T to) {
 
-        return null;
-    }
+        if(pathExists(from, to)){
+            Map<T, T> connection = new HashMap<>();
+            LinkedList<Edge<T>> path = new LinkedList<>();
+            T current = to;
 
-    public List<Edge<T>> getPath(T from, T to, Map<T, T> connection) {
-        LinkedList<Edge<T>> path = new LinkedList<>();
-        T current = to;
-        while (!current.equals(from)) {
-            T next = connection.get(current);
-            Edge<T> edge = getEdgeBetween(next, current);
-            path.addFirst(edge);
-            current = next;
+            while (!current.equals(from)){
+                T next = connection.get(current);
+                Edge edge = getEdgeBetween(next, current);
+                path.addFirst(edge);
+                current = next;
+            }
+
+            return path;
+        }else{
+            return null;
         }
-        return Collections.unmodifiableList(path);
+
     }
 
     private void depthFirstVisitAll(T current, Set<T> visited) {
