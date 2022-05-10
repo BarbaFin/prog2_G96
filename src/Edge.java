@@ -1,29 +1,29 @@
 import java.util.Objects;
-public class Edge {
+public class Edge<T> {
 
-    private Town destination;
+    private T destination;
     private String name;
-    private double weight;
+    private int weight;
 
-    public Edge(Town destination, String name, double weight) {
+    public Edge(T destination, String name, int weight) {
         this.destination = Objects.requireNonNull(destination);
         this.name = Objects.requireNonNull(name);
 
-        if (Double.isNaN(weight)) {
+        if (weight < 0) {
             throw new IllegalArgumentException();
         }
         this.weight = weight;
     }
 
-    public Town getDestination() {
+    public T getDestination() {
         return destination;
     }
 
-    public double getWeight() {
+    public int getWeight() {
         return weight;
     }
 
-    public void setWeight(double weight) {
+    public void setWeight(int weight) {
         this.weight = weight;
     }
 
