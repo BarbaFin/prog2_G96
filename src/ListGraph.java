@@ -27,6 +27,9 @@ public class ListGraph<T> implements Graph<T> {
         if (!nodes.containsKey(x) || !nodes.containsKey(y)) {
             throw new NoSuchElementException();
         }
+        if(weight < 0){
+            throw new IllegalArgumentException();
+        }
         if(getEdgeBetween(x,y) == null){
             Set<Edge <T>> xedge = nodes.get(x);
             Set<Edge <T>> yedge = nodes.get(y);
@@ -111,7 +114,7 @@ public class ListGraph<T> implements Graph<T> {
     //FEL, SKA RETURNERA EN VÄG
     @Override
     public List<Edge<T>> getPath(T from, T to) {
-
+/*
         if(pathExists(from, to)){
             Map<T, T> connection = new HashMap<>();
             LinkedList<Edge<T>> path = new LinkedList<>();
@@ -128,7 +131,8 @@ public class ListGraph<T> implements Graph<T> {
         }else{
             return null;
         }
-
+*/
+        return null;
     }
 
     private void depthFirstVisitAll(T current, Set<T> visited) {
