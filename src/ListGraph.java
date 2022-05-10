@@ -45,12 +45,12 @@ public class ListGraph<T> implements Graph<T> {
         nodes.get(x).remove(edgeXY);
         nodes.get(y).remove(edgeYX);
         }
-
-        //FEL, FUNGERAR EJ
+        
     public void setConnectionWeight(T x, T y, int weight) {
         if (nodes.containsKey(x) && nodes.containsKey(y)) {
             if (weight >= 0) {
                 getEdgeBetween(x,y).setWeight(weight);
+                getEdgeBetween(y,x).setWeight(weight);
             } else {
                 throw new IllegalArgumentException();
             }
@@ -96,6 +96,7 @@ public class ListGraph<T> implements Graph<T> {
     //FEL, SKA RETURNERA EN VÄG
     @Override
     public List<Edge<T>> getPath(T from, T to) {
+
         return null;
     }
 

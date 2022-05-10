@@ -31,9 +31,12 @@ public class Edge<T> {
         return name;
     }
 
+    //Fel av någon anlednig
     public String toString() {
-        return "Destination: " + destination +
-                ". Namn: '" + name + '\'' +
-                ". Vikt: " + weight ;
+        return "Edge{" +
+                "destination=" + destination +
+                ", name='" + name + '\'' +
+                ", weight=" + weight +
+                '}';
     }
 }

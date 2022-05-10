@@ -22,6 +22,8 @@ public class Test {
 
         graph.connect(berlin, oslo, "test", 1);
 
+        graph.setConnectionWeight(stockholm, malmö, 20);
+
         //graph.disconnect(stockholm);
         //graph.setConnectionWeight(stockholm,kiruna, 35.0);
 
