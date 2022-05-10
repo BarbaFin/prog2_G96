@@ -12,10 +12,18 @@ public class ListGraph<T> implements Graph<T> {
         if (!nodes.containsKey(t)) {
             throw new NoSuchElementException();
         }
-            nodes.remove(t);
+
+        for(T q : nodes.keySet()){
+            getEdgeBetween(q,t);
+            if(getEdgeBetween(q,t) == null){
+
+            }else{
+                disconnect(q,t);
+            }
         }
-            //if (edge.getDestination().equals(t)) {
-            //    nodes.remove(edge);
+        nodes.remove(t);
+    }
+
 
     public void connect(T x, T y, String name, int weight){
         if (!nodes.containsKey(x) || !nodes.containsKey(y)) {
