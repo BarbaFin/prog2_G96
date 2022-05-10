@@ -11,9 +11,12 @@ public class ListGraph<T> implements Graph<T> {
     public void remove(T t) {
         if (!nodes.containsKey(t)) {
             throw new NoSuchElementException();
-        } else {
-            nodes.remove(t);
         }
+        for (Edge<T> edge : nodes.get(t)) {
+            nodes.remove(edge.getDestination().equals(t));
+            break;
+        }
+            nodes.remove(t);
     }
 
     public void connect(T x, T y, String name, int weight){
