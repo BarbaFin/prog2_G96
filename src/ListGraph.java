@@ -3,14 +3,14 @@ import java.util.*;
 public class ListGraph<T> implements Graph<T> {
     private final Map<T, Set<Edge <T>>> nodes = new HashMap<>();
 
-    public void add(T T){
-            nodes.putIfAbsent(T, new HashSet<>());
+    public void add(T t){
+            nodes.putIfAbsent(t, new HashSet<>());
     }
-    public void remove(T T){
-        if (!nodes.containsKey(T)) {
+    public void remove(T t){
+        if (!nodes.containsKey(t)) {
             throw new NoSuchElementException();
         }else {
-            nodes.remove(T);
+            nodes.remove(t);
         }
     }
     public void connect(T x, T y, String name, int weight){
@@ -19,11 +19,11 @@ public class ListGraph<T> implements Graph<T> {
         }
         //Det ska in en till exception här!
         else {
-            Set<Edge <T>> xEdge = nodes.get(x);
-            Set<Edge <T>> yEdge = nodes.get(y);
+            Set<Edge <T>> xedge = nodes.get(x);
+            Set<Edge <T>> yedge = nodes.get(y);
 
-            xEdge.add(new Edge<T>(y, name, weight));
-            yEdge.add(new Edge<T>(x, name, weight));
+            xedge.add(new Edge<T>(y, name, weight));
+            yedge.add(new Edge<T>(x, name, weight));
         }
     }
 //Ändra Edge till Edge<T>
@@ -55,10 +55,10 @@ public class ListGraph<T> implements Graph<T> {
         return Set.copyOf(nodes.keySet());
     }
 
-    public List<Edge<T>> getEdgesFrom(T T){
+    public List<Edge<T>> getEdgesFrom(T t){
         LinkedList<Edge<T>> edges = new LinkedList<>();
-        if (nodes.containsKey(T)) {
-            for (Edge<T> edge : nodes.get(T)) {
+        if (nodes.containsKey(t)) {
+            for (Edge<T> edge : nodes.get(t)) {
                 edges.add(edge);
             }
         } else {
