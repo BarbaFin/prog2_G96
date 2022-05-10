@@ -18,7 +18,7 @@ public class ListGraph<T> implements Graph<T> {
             if(getEdgeBetween(q,t) == null){
 
             }else{
-                disconnect(q,t);
+                removeDisconnet(q,t);
             }
         }
         nodes.remove(t);
@@ -41,6 +41,13 @@ public class ListGraph<T> implements Graph<T> {
         }
     }
 
+    public void removeDisconnet(T x, T y){
+        Edge <T> edgeXY = getEdgeBetween(x,y);
+        Edge <T> edgeYX = getEdgeBetween(y,x);
+
+        nodes.get(x).remove(edgeXY);
+        nodes.get(y).remove(edgeYX);
+    }
     public void disconnect(T x, T y) {
 
         if (!nodes.containsKey(x) || !nodes.containsKey(y)) {
