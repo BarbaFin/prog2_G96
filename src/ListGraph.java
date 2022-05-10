@@ -17,13 +17,15 @@ public class ListGraph<T> implements Graph<T> {
         if (!nodes.containsKey(x) || !nodes.containsKey(y)) {
             throw new NoSuchElementException();
         }
-        //Det ska in en till exception här!
-        else {
+        if(getEdgeBetween(x,y) == null){
             Set<Edge <T>> xedge = nodes.get(x);
             Set<Edge <T>> yedge = nodes.get(y);
 
             xedge.add(new Edge<T>(y, name, weight));
             yedge.add(new Edge<T>(x, name, weight));
+        }
+        else {
+            throw new IllegalStateException();
         }
     }
 //Ändra Edge till Edge<T>
