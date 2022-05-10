@@ -6,6 +6,8 @@ public class ListGraph<T> implements Graph<T> {
     public void add(T t){
             nodes.putIfAbsent(t, new HashSet<>());
     }
+
+    //FEL, KOLLA MODULEN
     public void remove(T t){
         if (!nodes.containsKey(t)) {
             throw new NoSuchElementException();
@@ -28,7 +30,6 @@ public class ListGraph<T> implements Graph<T> {
             throw new IllegalStateException();
         }
     }
-//Ändra Edge till Edge<T>
 
     public void disconnect(T x, T y) {
 
@@ -45,6 +46,7 @@ public class ListGraph<T> implements Graph<T> {
         nodes.get(y).remove(edgeYX);
         }
 
+        //FEL, FUNGERAR EJ
     public void setConnectionWeight(T x, T y, int weight) {
         if (nodes.containsKey(x) && nodes.containsKey(y)) {
             if (weight >= 0) {
@@ -83,11 +85,15 @@ public class ListGraph<T> implements Graph<T> {
         return null;
     }
     public boolean pathExists(T a, T b){
+        if(nodes.get(a) == null || nodes.get(b) == null){
+            return false;
+        }
         Set<T> visited = new HashSet<>();
         depthFirstVisitAll(a, visited);
         return visited.contains(b);
     }
 
+    //FEL, SKA RETURNERA EN VÄG
     @Override
     public List<Edge<T>> getPath(T from, T to) {
         return null;
