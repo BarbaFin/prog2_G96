@@ -33,6 +33,9 @@ public class ListGraph<T> implements Graph<T> {
         if (!nodes.containsKey(x) || !nodes.containsKey(y)) {
             throw new NoSuchElementException();
         }
+        if(getEdgeBetween(x,y) == null){
+            throw new IllegalStateException();
+        }
         Edge <T> edgeXY = getEdgeBetween(x,y);
         Edge <T> edgeYX = getEdgeBetween(y,x);
 
