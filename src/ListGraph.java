@@ -19,11 +19,11 @@ public class ListGraph<T> implements Graph<T> {
         }
         //Det ska in en till exception här!
         else {
-            Set<Edge <T>> xTEdge = nodes.get(x);
-            Set<Edge <T>> yTEdge = nodes.get(y);
+            Set<Edge <T>> xEdge = nodes.get(x);
+            Set<Edge <T>> yEdge = nodes.get(y);
 
-            xTEdge.add(new Edge<T>(y, name, weight));
-            yTEdge.add(new Edge<T>(x, name, weight));
+            xEdge.add(new Edge<T>(y, name, weight));
+            yEdge.add(new Edge<T>(x, name, weight));
         }
     }
 //Ändra Edge till Edge<T>
@@ -110,8 +110,8 @@ public class ListGraph<T> implements Graph<T> {
     public String toString(){
         StringBuilder builder = new StringBuilder();
 
-        for (T T : nodes.keySet()) {
-            builder.append(T).append(": ").append(nodes.get(T)).append("\n");
+        for (T t : nodes.keySet()) {
+            builder.append(t).append(": ").append(nodes.get(t)).append("\n");
         }
         return builder.toString();
     }
