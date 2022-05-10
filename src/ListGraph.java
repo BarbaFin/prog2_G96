@@ -13,7 +13,9 @@ public class ListGraph<T> implements Graph<T> {
             throw new NoSuchElementException();
         } else {
             nodes.remove(t);
+        }
     }
+    
     public void connect(T x, T y, String name, int weight){
         if (!nodes.containsKey(x) || !nodes.containsKey(y)) {
             throw new NoSuchElementException();
