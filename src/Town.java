@@ -1,7 +1,6 @@
 public class Town {
     private final String name;
 
-
     public Town(String name) {
         this.name = name;
     }
@@ -9,5 +8,4 @@ public class Town {
     public String toString() {
         return name;
     }
-
 }

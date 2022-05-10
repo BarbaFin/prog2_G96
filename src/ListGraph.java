@@ -30,17 +30,14 @@ public class ListGraph<T> {
 //Ändra Edge till Edge<T>
 
     public void disconnect(T x, T y) {
-//Ändra sen.
         if (!nodes.containsKey(x) || !nodes.containsKey(y)) {
             throw new NoSuchElementException();
         }
-
         Edge <T> edgeXY = getEdgeBetween(x,y);
         Edge <T> edgeYX = getEdgeBetween(y,x);
 
         nodes.get(x).remove(edgeXY);
         nodes.get(y).remove(edgeYX);
-        //System.out.println("TEST" + yTEdge);
         }
 
     public void setConnectionWeight(T x, T y, int weight) {

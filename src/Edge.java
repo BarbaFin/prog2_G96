@@ -32,9 +32,8 @@ public class Edge<T> {
     }
 
     public String toString() {
-        return "destination = " + destination +
-                ", name = '" + name + '\'' +
-                ", weight = " + weight ;
+        return "Destination: " + destination +
+                ". Namn: '" + name + '\'' +
+                ". Vikt: " + weight ;
     }
-
 }
