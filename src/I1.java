@@ -1,4 +1,4 @@
-/*
+
 import java.util.NoSuchElementException;
 
 /**
@@ -12,7 +12,7 @@ import java.util.NoSuchElementException;
  * Filen ska inte lämnas in.
  */
 
-/*
+
 public class I1 {
 
 	private static final double VERSION = 1.1;
@@ -195,5 +195,3 @@ public class I1 {
 
 }
 
-
- */

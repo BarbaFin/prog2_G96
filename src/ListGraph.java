@@ -1,7 +1,6 @@
 import java.util.*;
 
-public class ListGraph<T> {
-
+public class ListGraph<T> implements Graph<T> {
     private final Map<T, Set<Edge <T>>> nodes = new HashMap<>();
 
     public void add(T T){
@@ -30,6 +29,7 @@ public class ListGraph<T> {
 //Ändra Edge till Edge<T>
 
     public void disconnect(T x, T y) {
+
         if (!nodes.containsKey(x) || !nodes.containsKey(y)) {
             throw new NoSuchElementException();
         }
