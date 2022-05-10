@@ -33,6 +33,6 @@ public class Edge<T> {
 
     //Fel av någon anlednig
     public String toString() {
-        return "Till " + destination + " med " + name + " tar " + weight;
+        return "till " + destination + " med " + name + " tar " + weight;
     }
 }
