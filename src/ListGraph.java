@@ -4,7 +4,7 @@ public class ListGraph<T> implements Graph<T> {
     private final Map<T, Set<Edge <T>>> nodes = new HashMap<>();
 
     public void add(T t){
-            nodes.putIfAbsent(t, new HashSet<>());
+        nodes.putIfAbsent(t, new HashSet<>());
     }
 
     public void remove(T t) {
@@ -14,7 +14,7 @@ public class ListGraph<T> implements Graph<T> {
                 if(getEdgeBetween(q,t) == null){
 
                 }else{
-                    removeDisconnet(q,t);
+                    removeDisconnect(q,t);
                 }
             }
             nodes.remove(t);
@@ -42,7 +42,7 @@ public class ListGraph<T> implements Graph<T> {
         }
     }
 
-    public void removeDisconnet(T x, T y){
+    public void removeDisconnect(T x, T y){
         Edge <T> edgeXY = getEdgeBetween(x,y);
         Edge <T> edgeYX = getEdgeBetween(y,x);
 
@@ -62,8 +62,8 @@ public class ListGraph<T> implements Graph<T> {
 
         nodes.get(x).remove(edgeXY);
         nodes.get(y).remove(edgeYX);
-        }
-        
+    }
+
     public void setConnectionWeight(T x, T y, int weight) {
         if (nodes.containsKey(x) && nodes.containsKey(y)) {
             if (weight >= 0) {
@@ -111,28 +111,35 @@ public class ListGraph<T> implements Graph<T> {
         return visited.contains(y);
     }
 
-    //FEL, SKA RETURNERA EN VÄG
     @Override
     public List<Edge<T>> getPath(T from, T to) {
-/*
+
         if(pathExists(from, to)){
             Map<T, T> connection = new HashMap<>();
+            depthFirstConnection(from,to, connection);
             LinkedList<Edge<T>> path = new LinkedList<>();
+
             T current = to;
 
             while (!current.equals(from)){
                 T next = connection.get(current);
-                Edge edge = getEdgeBetween(next, current);
+                Edge<T> edge = getEdgeBetween(next, current);
                 path.addFirst(edge);
                 current = next;
             }
-
             return path;
         }else{
             return null;
         }
-*/
-        return null;
+    }
+
+    private void depthFirstConnection(T from, T to, Map<T, T> connection) {
+        connection.put(from, to);
+        for (Edge<T> edge : nodes.get(to)) {
+            if (!connection.containsKey(edge.getDestination())) {
+                depthFirstConnection(edge.getDestination(), to, connection);
+            }
+        }
     }
 
     private void depthFirstVisitAll(T current, Set<T> visited) {
