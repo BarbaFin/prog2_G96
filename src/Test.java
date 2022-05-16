@@ -31,10 +31,12 @@ public class Test {
 
         //graph.disconnect(oslo, berlin);
 
-        graph.remove(stockholm);
+        //graph.remove(stockholm);
         graph.getEdgeBetween(stockholm,malmö);
+        var e = graph.getPath(stockholm,berlin);
+
         //System.out.println(graph.getNodes());
 
-        System.out.println(graph);
+        System.out.println(e);
     }
 }
