@@ -75,7 +75,12 @@ public class MapFX extends Application{
         primaryStage.setScene(scene);
         primaryStage.show();
     }
-
+    class testHandler implements EventHandler<ActionEvent> {
+        public void handle(ActionEvent e)
+        {
+            System.out.println("TITS");
+        }
+    };
 
     public static void main(String[] args) {
         launch(args);
