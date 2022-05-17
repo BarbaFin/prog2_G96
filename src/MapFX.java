@@ -1,6 +1,8 @@
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -60,9 +62,12 @@ public class MapFX extends Application{
         Scene scene = new Scene(vbox,620,780);
         primaryStage.setScene(scene);
         primaryStage.show();
-
     }
-
+    class NewHandler implements EventHandler<ActionEvent>{
+        @Override public void handle(ActionEvent action){
+            
+        }
+    }
 
     public static void main(String[] args) {
         launch(args);
