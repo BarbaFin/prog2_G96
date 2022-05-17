@@ -16,6 +16,8 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.util.Collections;
 import java.util.Map;
@@ -88,10 +90,29 @@ public class MapFX extends Application{
     class openHandler implements EventHandler<ActionEvent> {
         public void handle(ActionEvent e)
         {
-            //FileInputStream graph = new FileInputStream("europa.graph");
-            //ObjectInputStream in = new ObjectInputStream(graph);;
-            //in.close();
-            //graph.close();
+            FileInputStream graph = null;
+            try {
+                graph = new FileInputStream("europa.graph");
+            } catch (FileNotFoundException ex) {
+                throw new RuntimeException(ex);
+            }
+            ObjectInputStream in = null;
+            try {
+                in = new ObjectInputStream(graph);
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+            ;
+            try {
+                in.close();
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+            try {
+                graph.close();
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
         }
     };
 
