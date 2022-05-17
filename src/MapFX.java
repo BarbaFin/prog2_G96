@@ -60,15 +60,8 @@ public class MapFX extends Application{
         Image image = new Image("europa.gif");
         ImageView imageView = new ImageView(image);
 
-        EventHandler<ActionEvent> NewHandler = new EventHandler<ActionEvent>() {
-            public void handle(ActionEvent e)
-            {
-                System.out.println("TITS");
-            }
-        };
-
         vbox.getChildren().add(imageView);
-        newMap.setOnAction(NewHandler);
+        newMap.setOnAction(new testHandler());
 
 
         Scene scene = new Scene(vbox,620,780);
