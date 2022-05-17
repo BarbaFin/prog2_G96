@@ -27,6 +27,9 @@ public class MapFX extends Application{
     private MenuItem open;
     private Image image;
     private ImageView imageView;
+    private Scene scene;
+    private Button newPlaceButton;
+
     @Override
     public void start(Stage primaryStage) {
 
@@ -56,8 +59,11 @@ public class MapFX extends Application{
         root.getChildren().add(findPathButton);
         Button showConnectionButton = new Button("Show Connection");
         root.getChildren().add(showConnectionButton);
-        Button newPlaceButton = new Button("New Place");
+
+        newPlaceButton = new Button("New Place");
         root.getChildren().add(newPlaceButton);
+
+
         Button newConnectionButton = new Button("New Connection");
         root.getChildren().add(newConnectionButton);
         Button changeConnectionButton = new Button("Change Connection");
@@ -76,13 +82,14 @@ public class MapFX extends Application{
         imageView = new ImageView(image);
         imageView.setVisible(false);
 
+        newPlaceButton.setOnAction(new newPlaceHandler());
 
         vbox.getChildren().add(imageView);
 
         newMap.setOnAction(new newMapHandler());
         open.setOnAction(new openHandler());
 
-        Scene scene = new Scene(vbox,620,780);
+        scene = new Scene(vbox,620,780);
         primaryStage.setScene(scene);
         primaryStage.show();
     }
@@ -102,6 +109,7 @@ public class MapFX extends Application{
             graph.close();
         } catch (FileNotFoundException noFile) {
             Alert alert = new Alert(Alert.AlertType.ERROR, "test");
+
             alert.showAndWait();
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -112,6 +120,13 @@ public class MapFX extends Application{
         public void handle(ActionEvent e)
         {
             openFile();
+        }
+    };
+
+    class newPlaceHandler implements EventHandler<ActionEvent> {
+        public void handle(ActionEvent e)
+        {
+            scene.setCursor(Cursor.CROSSHAIR);
         }
     };
 
