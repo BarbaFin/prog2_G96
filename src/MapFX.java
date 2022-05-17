@@ -129,6 +129,7 @@ public class MapFX extends Application{
         public void handle(ActionEvent e)
         {
             scene.setCursor(Cursor.CROSSHAIR);
+            newPlaceButton.setDisable(true);
 
             vbox.setOnMouseClicked(new EventHandler<Event>() {
                 @Override
