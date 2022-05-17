@@ -38,6 +38,8 @@ public class MapFX extends Application{
     private Button newPlaceButton;
     private VBox vbox;
 
+    private PointerInfo a;
+
     @Override
     public void start(Stage primaryStage) {
 
@@ -140,15 +142,28 @@ public class MapFX extends Application{
             vbox.setOnMouseClicked(new EventHandler<Event>() {
                 @Override
                 public void handle(Event event) {
+                    a = MouseInfo.getPointerInfo();
+
+                    Point b = a.getLocation();
+                    int x = (int) b.getX();
+                    int y = (int) b.getY();
+
+                    String s = String.valueOf(x);
+                    String o = String.valueOf(y);
+
+                    Alert alert = new Alert(Alert.AlertType.ERROR, s + " : " + o);
+                    alert.showAndWait();
                     scene.setCursor(Cursor.DEFAULT);
+                    newPlaceButton.setDisable(false);
                 }
             });
-
-
         }
     };
 
+/*
 
+
+ */
 
 
     public static void main(String[] args) {
