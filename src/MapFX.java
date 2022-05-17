@@ -63,6 +63,13 @@ public class MapFX extends Application{
         Button changeConnectionButton = new Button("Change Connection");
         root.getChildren().add(changeConnectionButton);
 
+        File file = new File("proglangs.bok");
+        if (file.exists()){
+            openFile();
+        }
+
+
+
         vbox.getChildren().add(root);
 
         image = new Image("europa.gif");
@@ -104,7 +111,7 @@ public class MapFX extends Application{
     class openHandler implements EventHandler<ActionEvent> {
         public void handle(ActionEvent e)
         {
-
+            openFile();
         }
     };
 
