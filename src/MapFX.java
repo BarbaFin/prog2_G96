@@ -154,6 +154,7 @@ public class MapFX extends Application{
 
                     TextInputDialog dialog = new TextInputDialog("");
                     dialog.setTitle("Name");
+                    dialog.setHeaderText("");
                     dialog.setContentText("Name of place:");
                     Optional<String> result = dialog.showAndWait();
 
