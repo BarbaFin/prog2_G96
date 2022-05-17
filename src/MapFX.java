@@ -171,12 +171,13 @@ public class MapFX extends Application{
         }
     };
 
-/*
 
+    public void AddCity(String name){
+        Town newTown = new Town(name);
 
- */
-
-
+        ListGraph graph = new ListGraph();
+        graph.add(newTown);
+    }
     public static void main(String[] args) {
         launch(args);
     }
