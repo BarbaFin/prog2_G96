@@ -16,6 +16,8 @@ public class MapFX extends Application{
 
     @Override
     public void start(Stage primaryStage) {
+
+        /*
         Pane root = new FlowPane();
 
         Label label = new Label("Det funkar!");
@@ -25,7 +27,8 @@ public class MapFX extends Application{
         primaryStage.setScene(scene);
         primaryStage.show();
 
-        /*
+         */
+
                VBox vbox = new VBox();
         MenuBar menuBar = new MenuBar();
         vbox.getChildren().add(menuBar);
@@ -69,7 +72,7 @@ public class MapFX extends Application{
         Scene scene = new Scene(vbox,620,780);
         primaryStage.setScene(scene);
         primaryStage.show();
-         */
+
     }
 
 
