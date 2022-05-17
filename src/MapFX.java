@@ -62,7 +62,14 @@ public class MapFX extends Application{
         Scene scene = new Scene(vbox,620,780);
         primaryStage.setScene(scene);
         primaryStage.show();
+
+        newMap.setOnAction(e -> {
+            System.out.println("Menu Item 1 Selected");
+        });
     }
+
+
+
     class NewHandler implements EventHandler<ActionEvent>{
         @Override public void handle(ActionEvent action){
 
