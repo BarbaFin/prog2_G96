@@ -15,7 +15,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class MapFX extends Application{
-
+    private MenuItem newMap;
     @Override
     public void start(Stage primaryStage) {
 
@@ -25,7 +25,7 @@ public class MapFX extends Application{
 
         Menu fileMenu = new Menu("File");
         menuBar.getMenus().add(fileMenu);
-        MenuItem newMap = new MenuItem("New Map");
+        newMap = new MenuItem("New Map");
         fileMenu.getItems().add(newMap);
         MenuItem open = new MenuItem("Open");
         fileMenu.getItems().add(open);
@@ -65,7 +65,7 @@ public class MapFX extends Application{
     }
     class NewHandler implements EventHandler<ActionEvent>{
         @Override public void handle(ActionEvent action){
-            
+
         }
     }
 
