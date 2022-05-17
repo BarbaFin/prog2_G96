@@ -41,6 +41,8 @@ public class MapFX extends Application{
 
     private PointerInfo a;
 
+    private ListGraph graph;
+
     @Override
     public void start(Stage primaryStage) {
 
@@ -160,6 +162,7 @@ public class MapFX extends Application{
 
                     if (result.isPresent()){
                         Alert alert = new Alert(Alert.AlertType.INFORMATION, "Your name: " + result.get());
+                        AddCity(result.get());
                         alert.showAndWait();
                     }
 
@@ -175,8 +178,9 @@ public class MapFX extends Application{
     public void AddCity(String name){
         Town newTown = new Town(name);
 
-        ListGraph graph = new ListGraph();
+        graph = new ListGraph();
         graph.add(newTown);
+        System.out.println(graph);
     }
     public static void main(String[] args) {
         launch(args);
