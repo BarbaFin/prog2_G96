@@ -97,7 +97,7 @@ public class MapFX extends Application{
     private void openFile(){
         try {
             FileInputStream graph = new FileInputStream("europa.graph");
-            ObjectInputStream in = new ObjectInputStream(graph);;
+            ObjectInputStream in = new ObjectInputStream(graph);
             in.close();
             graph.close();
         } catch (FileNotFoundException noFile) {
