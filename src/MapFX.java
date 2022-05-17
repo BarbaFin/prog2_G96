@@ -76,7 +76,6 @@ public class MapFX extends Application{
         public void handle(ActionEvent e)
         {
             imageView.setVisible(true);
-            System.out.println("TITS");
             imageView.setImage(new Image("europa.gif"));
         }
     };
