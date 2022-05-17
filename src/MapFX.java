@@ -41,7 +41,7 @@ public class MapFX extends Application{
 
     private PointerInfo a;
 
-    private ListGraph graph;
+    private ListGraph graph = new ListGraph();
 
     @Override
     public void start(Stage primaryStage) {
@@ -180,7 +180,7 @@ public class MapFX extends Application{
     public void AddCity(String name){
         Town newTown = new Town(name);
 
-        graph = new ListGraph();
+
         graph.add(newTown);
         System.out.println(graph);
     }
