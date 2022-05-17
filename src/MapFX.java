@@ -17,6 +17,7 @@ import javafx.stage.Stage;
 
 public class MapFX extends Application{
     private MenuItem newMap;
+    private Image image;
     @Override
     public void start(Stage primaryStage) {
 
@@ -57,12 +58,11 @@ public class MapFX extends Application{
 
         vbox.getChildren().add(root);
 
-        Image image = new Image("europa.gif");
+        image = new Image("europa.gif");
         ImageView imageView = new ImageView(image);
 
         vbox.getChildren().add(imageView);
         newMap.setOnAction(new testHandler());
-
 
         Scene scene = new Scene(vbox,620,780);
         primaryStage.setScene(scene);
@@ -72,6 +72,7 @@ public class MapFX extends Application{
         public void handle(ActionEvent e)
         {
             System.out.println("TITS");
+            image.setImage(new Image("europa.gif"));
         }
     };
 
