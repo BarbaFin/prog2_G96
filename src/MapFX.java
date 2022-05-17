@@ -2,6 +2,7 @@ import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -29,11 +30,12 @@ public class MapFX extends Application{
     private ImageView imageView;
     private Scene scene;
     private Button newPlaceButton;
+    private VBox vbox;
 
     @Override
     public void start(Stage primaryStage) {
 
-        VBox vbox = new VBox();
+        vbox = new VBox();
         MenuBar menuBar = new MenuBar();
         vbox.getChildren().add(menuBar);
 
@@ -127,8 +129,16 @@ public class MapFX extends Application{
         public void handle(ActionEvent e)
         {
             scene.setCursor(Cursor.CROSSHAIR);
+
+            vbox.setOnMouseClicked(new EventHandler<Event>() {
+                @Override
+                public void handle(Event event) {
+                    System.out.println("LOL");
+                }
+            });
         }
     };
+
 
 
 
