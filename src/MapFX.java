@@ -20,6 +20,7 @@ import java.io.FileNotFoundException;
 import java.io.ObjectInputStream;
 import java.util.Collections;
 import java.util.Map;
+import java.io.*;
 
 public class MapFX extends Application{
     private MenuItem newMap;
@@ -86,20 +87,28 @@ public class MapFX extends Application{
         }
     };
 
+    private void openFile(){
+        try {
+            FileInputStream graph = new FileInputStream("europa.graph");
+            ObjectInputStream in = new ObjectInputStream(graph);;
+            in.close();
+            graph.close();
+        } catch (FileNotFoundException noFile) {
+            Alert alert = new Alert(Alert.AlertType.ERROR, "test");
+            alert.showAndWait();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     class openHandler implements EventHandler<ActionEvent> {
         public void handle(ActionEvent e)
         {
-            try {
-                FileInputStream graph = new FileInputStream("europa.graph");
-                ObjectInputStream in = new ObjectInputStream(graph);;
-                in.close();
-                graph.close();
-            } catch (FileNotFoundException noFile) {
-                Alert alert = new Alert(Alert.AlertType.ERROR, "test");
-                alert.showAndWait();
-        }
+
         }
     };
+
+
 
     public static void main(String[] args) {
         launch(args);
