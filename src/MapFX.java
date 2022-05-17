@@ -5,7 +5,6 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
@@ -15,8 +14,9 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-public class MapFX extends Application{
+public class MapFX extends Application {
     private MenuItem newMap;
+
     @Override
     public void start(Stage primaryStage) {
 
@@ -27,7 +27,8 @@ public class MapFX extends Application{
         Menu fileMenu = new Menu("File");
         menuBar.getMenus().add(fileMenu);
         newMap = new MenuItem("New Map");
-        newMap.setOnAction(new NewMapHandler());
+
+
         fileMenu.getItems().add(newMap);
         MenuItem open = new MenuItem("Open");
         fileMenu.getItems().add(open);
@@ -59,29 +60,20 @@ public class MapFX extends Application{
         Image image = new Image("europa.gif");
         ImageView imageView = new ImageView(image);
 
-        vbox.getChildren().add(imageView);
+        EventHandler<ActionEvent> NewHandler = new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent e) {
+                System.out.println("TITS");
+            }
+        };
 
-        Scene scene = new Scene(vbox,620,780);
+        vbox.getChildren().add(imageView);
+        newMap.setOnAction(NewHandler);
+
+
+        Scene scene = new Scene(vbox, 620, 780);
         primaryStage.setScene(scene);
         primaryStage.show();
-
-        newMap.setOnAction(e -> {
-            System.out.println("Menu Item 1 Selected");
-        });
-    }
-
-
-
-    class NewMapHandler implements EventHandler<ActionEvent>{
-        @Override public void handle(ActionEvent action){
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setHeaderText("Test");
-            alert.setContentText(null);
-        }
-    }
-
-
-    public static void main(String[] args) {
-        launch(args);
     }
 }
+
+
