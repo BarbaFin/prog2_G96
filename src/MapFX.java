@@ -27,6 +27,7 @@ public class MapFX extends Application{
         Menu fileMenu = new Menu("File");
         menuBar.getMenus().add(fileMenu);
         newMap = new MenuItem("New Map");
+        newMap.setOnAction(new NewMapHandler());
         fileMenu.getItems().add(newMap);
         MenuItem open = new MenuItem("Open");
         fileMenu.getItems().add(open);
@@ -71,12 +72,13 @@ public class MapFX extends Application{
 
 
 
-    class NewHandler implements EventHandler<ActionEvent>{
+    class NewMapHandler implements EventHandler<ActionEvent>{
         @Override public void handle(ActionEvent action){
-
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setHeaderText("Test");
+            alert.setContentText(null);
         }
     }
-
 
 
     public static void main(String[] args) {
