@@ -9,6 +9,11 @@ import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuBar;
+import javafx.scene.control.MenuItem;
+import javafx.scene.effect.Light;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
@@ -16,6 +21,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+import java.awt.*;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.ObjectInputStream;
@@ -133,9 +139,11 @@ public class MapFX extends Application{
             vbox.setOnMouseClicked(new EventHandler<Event>() {
                 @Override
                 public void handle(Event event) {
-                    System.out.println("LOL");
+                    scene.setCursor(Cursor.DEFAULT);
                 }
             });
+
+
         }
     };
 
