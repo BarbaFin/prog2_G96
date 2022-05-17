@@ -157,8 +157,12 @@ public class MapFX extends Application{
                     dialog.setContentText("Name of place:");
                     Optional<String> result = dialog.showAndWait();
 
-                    //Alert alert = new Alert(Alert.AlertType.INFORMATION, "");
-                    //alert.showAndWait();
+                    if (result.isPresent()){
+                        Alert alert = new Alert(Alert.AlertType.INFORMATION, "Your name: " + result.get());
+                        alert.showAndWait();
+                    }
+
+
                     scene.setCursor(Cursor.DEFAULT);
                     newPlaceButton.setDisable(false);
                 }
