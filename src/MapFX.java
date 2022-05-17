@@ -28,6 +28,7 @@ import java.io.ObjectInputStream;
 import java.util.Collections;
 import java.util.Map;
 import java.io.*;
+import java.util.Optional;
 
 public class MapFX extends Application{
     private MenuItem newMap;
@@ -151,8 +152,13 @@ public class MapFX extends Application{
                     String s = String.valueOf(x);
                     String o = String.valueOf(y);
 
-                    Alert alert = new Alert(Alert.AlertType.ERROR, s + " : " + o);
-                    alert.showAndWait();
+                    TextInputDialog dialog = new TextInputDialog("");
+                    dialog.setTitle("Name");
+                    dialog.setContentText("Name of place:");
+                    Optional<String> result = dialog.showAndWait();
+
+                    //Alert alert = new Alert(Alert.AlertType.INFORMATION, "");
+                    //alert.showAndWait();
                     scene.setCursor(Cursor.DEFAULT);
                     newPlaceButton.setDisable(false);
                 }
