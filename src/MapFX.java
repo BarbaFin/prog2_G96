@@ -169,6 +169,8 @@ public class MapFX extends Application{
 
                     scene.setCursor(Cursor.DEFAULT);
                     newPlaceButton.setDisable(false);
+
+                    vbox.setOnMouseClicked(null);
                 }
             });
         }
