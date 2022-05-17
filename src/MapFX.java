@@ -63,7 +63,7 @@ public class MapFX extends Application{
         Button changeConnectionButton = new Button("Change Connection");
         root.getChildren().add(changeConnectionButton);
 
-        File file = new File("proglangs.bok");
+        File file = new File("europa.graph");
         if (file.exists()){
             openFile();
         }
