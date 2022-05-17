@@ -15,6 +15,8 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+import java.io.FileInputStream;
+
 public class MapFX extends Application{
     private MenuItem newMap;
     private MenuItem open;
@@ -83,6 +85,7 @@ public class MapFX extends Application{
     class openHandler implements EventHandler<ActionEvent> {
         public void handle(ActionEvent e)
         {
+            //FileInputStream graph = new FileInputStream("europa.graph");
             
         }
     };
