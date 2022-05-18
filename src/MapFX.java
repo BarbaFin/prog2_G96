@@ -21,6 +21,7 @@ import javafx.scene.image.WritableImage;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 
 import javax.imageio.ImageIO;
@@ -29,10 +30,13 @@ import java.awt.image.BufferedImage;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.ObjectInputStream;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Map;
 import java.io.*;
 import java.util.Optional;
+
+import static javafx.scene.paint.Color.RED;
 
 public class MapFX extends Application{
     private MenuItem newMap;
@@ -45,6 +49,12 @@ public class MapFX extends Application{
     private VBox vbox;
 
     private PointerInfo a;
+
+    private int x,y;
+
+    private Circle circle;
+
+    private ArrayList<Circle> cityCircleArray = new ArrayList<Circle>();;
 
     private ListGraph graph = new ListGraph();
 
@@ -159,6 +169,8 @@ public class MapFX extends Application{
         }
     }
 
+
+    //FÖR ATT LÄGGA TILL EN NY STAD PÅ KARTAN
     class newPlaceHandler implements EventHandler<ActionEvent> {
         public void handle(ActionEvent e)
         {
@@ -171,8 +183,8 @@ public class MapFX extends Application{
                     a = MouseInfo.getPointerInfo();
 
                     Point b = a.getLocation();
-                    int x = (int) b.getX();
-                    int y = (int) b.getY();
+                    x = (int) b.getX();
+                    y = (int) b.getY();
 
                     String s = String.valueOf(x);
                     String o = String.valueOf(y);
@@ -189,7 +201,6 @@ public class MapFX extends Application{
                         alert.showAndWait();
                     }
 
-
                     scene.setCursor(Cursor.DEFAULT);
                     newPlaceButton.setDisable(false);
 
@@ -202,6 +213,20 @@ public class MapFX extends Application{
 
     public void AddCity(String name){
         Town newTown = new Town(name);
+
+        circle = new Circle(x, y, 10);
+        circle.setFill(RED);
+
+        Circle lol;
+
+        lol = new Circle(x,y,10);
+
+        vbox.getChildren().add(lol);
+
+
+
+
+        //cityCircleArray
 
 
         graph.add(newTown);
