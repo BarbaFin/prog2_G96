@@ -149,7 +149,7 @@ public class MapFX extends Application{
     class saveImageHandler implements EventHandler<ActionEvent> {
         public void handle(ActionEvent e) {
             try {
-                WritableImage image = vbox.snapshot(null, null);
+                WritableImage image = imageView.snapshot(null, null);
                 BufferedImage bufferedImage = SwingFXUtils.fromFXImage(image, null);
                 ImageIO.write(bufferedImage, "png", new File("capture.png"));
             } catch (IOException i) {
