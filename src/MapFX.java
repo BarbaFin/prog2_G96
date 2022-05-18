@@ -8,6 +8,7 @@ import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
+import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
@@ -18,10 +19,9 @@ import javafx.scene.effect.Light;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
-import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.shape.Circle;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
 import javax.imageio.ImageIO;
@@ -53,8 +53,8 @@ public class MapFX extends Application{
     private int x,y;
 
     private Circle circle;
-
-    private FlowPane root;
+    private BorderPane root;
+    private Pane center;
 
     private ArrayList<Circle> cityCircleArray = new ArrayList<Circle>();;
 
@@ -85,19 +85,23 @@ public class MapFX extends Application{
         fileMenu.getItems().add(exit);
 
 
-        root = new FlowPane();
+        root = new BorderPane();
         root.setPadding(new Insets(7));
-        root.setHgap(5);
-        root.setVgap(5);
-        root.setAlignment(Pos.TOP_CENTER);
+        //root.setHgap(5);
+        //root.setVgap(5);
+        //root.setAlignment(Pos.TOP_CENTER);
+
+        center = new Pane();
+        root.setCenter(center);
+
+        Rectangle rectangle = new Rectangle(1000,100,100,100);
+        center.getChildren().add(rectangle);
+
+
         Button findPathButton = new Button("Find Path");
         root.getChildren().add(findPathButton);
         Button showConnectionButton = new Button("Show Connection");
         root.getChildren().add(showConnectionButton);
-
-
-
-
 
         newPlaceButton = new Button("New Place");
         root.getChildren().add(newPlaceButton);
@@ -224,12 +228,23 @@ public class MapFX extends Application{
 
         Alert alert = new Alert(Alert.AlertType.INFORMATION, "X:" + xCord + "Y:" + yCord);
 
-        Circle lol = new Circle(xCord,yCord,10);
+        Circle test = new Circle();
+
+
+
+
+        test.setRadius(5);
+        test.setCenterX(xCord);
+        test.setCenterY(yCord);
         //vbox.getChildren().add(lol);
 
 
         //cityCircleArray
-        root.getChildren().add(lol);
+        vbox.getChildren().addAll(test);
+
+        Rectangle rectangle = new Rectangle(100,100,100,100);
+        center.getChildren().add(rectangle);
+
 
         graph.add(newTown);
         System.out.println(graph + "X:" + xCord + "Y:" + yCord);
