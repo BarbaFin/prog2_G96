@@ -54,6 +54,8 @@ public class MapFX extends Application{
 
     private Circle circle;
 
+    private FlowPane root;
+
     private ArrayList<Circle> cityCircleArray = new ArrayList<Circle>();;
 
     private ListGraph graph = new ListGraph();
@@ -82,7 +84,8 @@ public class MapFX extends Application{
         MenuItem exit = new MenuItem("Exit");
         fileMenu.getItems().add(exit);
 
-        FlowPane root = new FlowPane();
+
+        root = new FlowPane();
         root.setPadding(new Insets(7));
         root.setHgap(5);
         root.setVgap(5);
@@ -91,6 +94,10 @@ public class MapFX extends Application{
         root.getChildren().add(findPathButton);
         Button showConnectionButton = new Button("Show Connection");
         root.getChildren().add(showConnectionButton);
+
+
+
+
 
         newPlaceButton = new Button("New Place");
         root.getChildren().add(newPlaceButton);
@@ -197,7 +204,7 @@ public class MapFX extends Application{
 
                     if (result.isPresent()){
                         Alert alert = new Alert(Alert.AlertType.INFORMATION, "Your name: " + result.get());
-                        AddCity(result.get());
+                        AddCity(result.get(), x,y);
                         alert.showAndWait();
                     }
 
@@ -211,26 +218,22 @@ public class MapFX extends Application{
     };
 
 
-    public void AddCity(String name){
+    public void AddCity(String name, int xCord, int yCord){
         Town newTown = new Town(name);
 
-        circle = new Circle(x, y, 10);
-        circle.setFill(RED);
 
-        Circle lol;
+        Alert alert = new Alert(Alert.AlertType.INFORMATION, "X:" + xCord + "Y:" + yCord);
 
-        lol = new Circle(x,y,10);
-
-        vbox.getChildren().add(lol);
-
-
+        Circle lol = new Circle(xCord,yCord,10);
+        //vbox.getChildren().add(lol);
 
 
         //cityCircleArray
-
+        root.getChildren().add(lol);
 
         graph.add(newTown);
-        System.out.println(graph);
+        System.out.println(graph + "X:" + xCord + "Y:" + yCord);
+
     }
     public static void main(String[] args) {
         launch(args);
