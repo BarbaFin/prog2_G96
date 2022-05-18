@@ -19,9 +19,11 @@ import javafx.scene.effect.Light;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import javax.imageio.ImageIO;
@@ -35,6 +37,7 @@ import java.util.Collections;
 import java.util.Map;
 import java.io.*;
 import java.util.Optional;
+import javafx.scene.paint.Color;
 
 import static javafx.scene.paint.Color.RED;
 
@@ -97,10 +100,6 @@ public class MapFX extends Application{
         root.setCenter(center);
         root.setTop(top);
 
-        Rectangle rectangle = new Rectangle(1000,100,100,100);
-        center.getChildren().add(rectangle);
-
-
         Button findPathButton = new Button("Find Path");
         findPathButton.setLayoutX(10);
         top.getChildren().add(findPathButton);
@@ -124,8 +123,6 @@ public class MapFX extends Application{
         if (file.exists()){
             openFile();
         }
-
-
 
         vbox.getChildren().add(root);
 
@@ -196,55 +193,57 @@ public class MapFX extends Application{
             scene.setCursor(Cursor.CROSSHAIR);
             newPlaceButton.setDisable(true);
 
-            vbox.setOnMouseClicked(new EventHandler<Event>() {
-                @Override
-                public void handle(Event event) {
-                    a = MouseInfo.getPointerInfo();
-
-                    Point b = a.getLocation();
-                    x = (int) b.getX();
-                    y = (int) b.getY();
-
-                    String s = String.valueOf(x);
-                    String o = String.valueOf(y);
-
-                    TextInputDialog dialog = new TextInputDialog("");
-                    dialog.setTitle("Name");
-                    dialog.setHeaderText("");
-                    dialog.setContentText("Name of place:");
-                    Optional<String> result = dialog.showAndWait();
-
-                    if (result.isPresent()){
-                        Alert alert = new Alert(Alert.AlertType.INFORMATION, "Your name: " + result.get());
-                        AddCity(result.get(), x,y);
-                        alert.showAndWait();
-                    }
-
-                    scene.setCursor(Cursor.DEFAULT);
-                    newPlaceButton.setDisable(false);
-
-                    vbox.setOnMouseClicked(null);
-                }
-            });
+            center.setOnMouseClicked(new placeCircleHandler());
         }
     };
 
+    class placeCircleHandler implements EventHandler<MouseEvent>{
 
-    public void AddCity(String name, int xCord, int yCord){
+        @Override
+        public void handle(MouseEvent event) {
+            a = MouseInfo.getPointerInfo();
+
+            Point b = a.getLocation();
+            x = (int) b.getX();
+            y = (int) b.getY();
+
+            double n = event.getX();
+            double m = event.getY();
+
+
+            String s = String.valueOf(x);
+            String o = String.valueOf(y);
+
+            TextInputDialog dialog = new TextInputDialog("");
+            dialog.setTitle("Name");
+            dialog.setHeaderText("");
+            dialog.setContentText("Name of place:");
+            Optional<String> result = dialog.showAndWait();
+
+            if (result.isPresent()){
+                Alert alert = new Alert(Alert.AlertType.INFORMATION, "Your name: " + result.get());
+                AddCity(result.get(), n,m);
+                alert.showAndWait();
+            }
+
+            scene.setCursor(Cursor.DEFAULT);
+            newPlaceButton.setDisable(false);
+
+            root.setOnMouseClicked(null);
+        }
+    }
+
+
+    public void AddCity(String name, double xCord, double yCord){
         Town newTown = new Town(name);
 
+        CityCircle test = new CityCircle(xCord,yCord,15);
 
-        Alert alert = new Alert(Alert.AlertType.INFORMATION, "X:" + xCord + "Y:" + yCord);
+        Text cityName = new Text(xCord + 20, yCord + 20, name);
 
-        Circle test = new Circle(xCord,yCord,10);
+        center.getChildren().addAll(test,cityName);
 
-        Circle lol = new Circle(xCord,yCord, 10);
-
-        center.getChildren().addAll(test,lol);
-        
         graph.add(newTown);
-        System.out.println(graph + "X:" + xCord + "Y:" + yCord);
-
     }
     public static void main(String[] args) {
         launch(args);
