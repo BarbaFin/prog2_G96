@@ -54,7 +54,7 @@ public class MapFX extends Application{
 
     private Circle circle;
     private BorderPane root;
-    private Pane center;
+    private Pane center, top;
 
     private ArrayList<Circle> cityCircleArray = new ArrayList<Circle>();;
 
@@ -92,25 +92,33 @@ public class MapFX extends Application{
         //root.setAlignment(Pos.TOP_CENTER);
 
         center = new Pane();
+        top = new Pane();
+
         root.setCenter(center);
+        root.setTop(top);
 
         Rectangle rectangle = new Rectangle(1000,100,100,100);
         center.getChildren().add(rectangle);
 
 
         Button findPathButton = new Button("Find Path");
-        root.getChildren().add(findPathButton);
+        findPathButton.setLayoutX(10);
+        top.getChildren().add(findPathButton);
         Button showConnectionButton = new Button("Show Connection");
-        root.getChildren().add(showConnectionButton);
+        showConnectionButton.setLayoutX(80);
+        top.getChildren().add(showConnectionButton);
 
         newPlaceButton = new Button("New Place");
-        root.getChildren().add(newPlaceButton);
+        newPlaceButton.setLayoutX(200);
+        top.getChildren().add(newPlaceButton);
 
 
         Button newConnectionButton = new Button("New Connection");
-        root.getChildren().add(newConnectionButton);
+        newConnectionButton.setLayoutX(280);
+        top.getChildren().add(newConnectionButton);
         Button changeConnectionButton = new Button("Change Connection");
-        root.getChildren().add(changeConnectionButton);
+        changeConnectionButton.setLayoutX(400);
+        top.getChildren().add(changeConnectionButton);
 
         File file = new File("europa.graph");
         if (file.exists()){
@@ -127,7 +135,7 @@ public class MapFX extends Application{
 
         newPlaceButton.setOnAction(new newPlaceHandler());
 
-        vbox.getChildren().add(imageView);
+        center.getChildren().add(imageView);
 
         newMap.setOnAction(new newMapHandler());
         open.setOnAction(new openHandler());
@@ -228,24 +236,12 @@ public class MapFX extends Application{
 
         Alert alert = new Alert(Alert.AlertType.INFORMATION, "X:" + xCord + "Y:" + yCord);
 
-        Circle test = new Circle();
+        Circle test = new Circle(xCord,yCord,10);
 
+        Circle lol = new Circle(xCord,yCord, 10);
 
-
-
-        test.setRadius(5);
-        test.setCenterX(xCord);
-        test.setCenterY(yCord);
-        //vbox.getChildren().add(lol);
-
-
-        //cityCircleArray
-        vbox.getChildren().addAll(test);
-
-        Rectangle rectangle = new Rectangle(100,100,100,100);
-        center.getChildren().add(rectangle);
-
-
+        center.getChildren().addAll(test,lol);
+        
         graph.add(newTown);
         System.out.println(graph + "X:" + xCord + "Y:" + yCord);
 
