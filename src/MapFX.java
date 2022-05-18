@@ -1,6 +1,7 @@
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -16,12 +17,15 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.effect.Light;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.image.WritableImage;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.ObjectInputStream;
@@ -33,6 +37,7 @@ import java.util.Optional;
 public class MapFX extends Application{
     private MenuItem newMap;
     private MenuItem open;
+    private MenuItem saveImage;
     private Image image;
     private ImageView imageView;
     private Scene scene;
@@ -54,12 +59,16 @@ public class MapFX extends Application{
         menuBar.getMenus().add(fileMenu);
         newMap = new MenuItem("New Map");
         fileMenu.getItems().add(newMap);
+
         MenuItem open = new MenuItem("Open");
         fileMenu.getItems().add(open);
+
         MenuItem save = new MenuItem("Save");
         fileMenu.getItems().add(save);
-        MenuItem saveImage = new MenuItem("Save Image");
+
+        saveImage = new MenuItem("Save Image");
         fileMenu.getItems().add(saveImage);
+
         MenuItem exit = new MenuItem("Exit");
         fileMenu.getItems().add(exit);
 
@@ -101,6 +110,7 @@ public class MapFX extends Application{
 
         newMap.setOnAction(new newMapHandler());
         open.setOnAction(new openHandler());
+        saveImage.setOnAction(new saveImageHandler());
 
         scene = new Scene(vbox,620,780);
         primaryStage.setScene(scene);
@@ -135,6 +145,19 @@ public class MapFX extends Application{
             openFile();
         }
     };
+
+    class saveImageHandler implements EventHandler<ActionEvent> {
+        public void handle(ActionEvent e) {
+            try {
+                WritableImage image = vbox.snapshot(null, null);
+                BufferedImage bufferedImage = SwingFXUtils.fromFXImage(image, null);
+                ImageIO.write(bufferedImage, "png", new File("capture.png"));
+            } catch (IOException i) {
+                Alert alert = new Alert(Alert.AlertType.ERROR,"IO-fel "+i.getMessage());
+                alert.showAndWait();
+            }
+        }
+    }
 
     class newPlaceHandler implements EventHandler<ActionEvent> {
         public void handle(ActionEvent e)
