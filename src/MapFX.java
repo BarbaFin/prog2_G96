@@ -48,7 +48,7 @@ public class MapFX extends Application{
     private Image image;
     private ImageView imageView;
     private Scene scene;
-    private Button newPlaceButton;
+    private Button newPlaceButton, newConnectionButton, changeConnectionButton, findPathButton;
     private VBox vbox;
 
     private PointerInfo a;
@@ -59,7 +59,7 @@ public class MapFX extends Application{
     private BorderPane root;
     private Pane center, top;
 
-    private ArrayList<Circle> cityCircleArray = new ArrayList<Circle>();;
+    private ArrayList<Circle> cityCircleArray = new ArrayList<Circle>();
 
     private ListGraph graph = new ListGraph();
 
@@ -100,9 +100,10 @@ public class MapFX extends Application{
         root.setCenter(center);
         root.setTop(top);
 
-        Button findPathButton = new Button("Find Path");
+        findPathButton = new Button("Find Path");
         findPathButton.setLayoutX(10);
         top.getChildren().add(findPathButton);
+
         Button showConnectionButton = new Button("Show Connection");
         showConnectionButton.setLayoutX(80);
         top.getChildren().add(showConnectionButton);
@@ -112,10 +113,11 @@ public class MapFX extends Application{
         top.getChildren().add(newPlaceButton);
 
 
-        Button newConnectionButton = new Button("New Connection");
+        newConnectionButton = new Button("New Connection");
         newConnectionButton.setLayoutX(280);
         top.getChildren().add(newConnectionButton);
-        Button changeConnectionButton = new Button("Change Connection");
+
+        changeConnectionButton = new Button("Change Connection");
         changeConnectionButton.setLayoutX(400);
         top.getChildren().add(changeConnectionButton);
 
@@ -131,6 +133,7 @@ public class MapFX extends Application{
         imageView.setVisible(false);
 
         newPlaceButton.setOnAction(new newPlaceHandler());
+        newConnectionButton.setOnAction(new connectHandler());
 
         center.getChildren().add(imageView);
 
@@ -197,6 +200,14 @@ public class MapFX extends Application{
         }
     };
 
+    //LÄGGA TILL EN CONNECTION
+    class connectHandler implements EventHandler<ActionEvent>{
+        @Override
+        public void handle(ActionEvent event) {
+            System.out.println("LOL");
+        }
+    }
+
     class placeCircleHandler implements EventHandler<MouseEvent>{
 
         @Override
@@ -233,6 +244,9 @@ public class MapFX extends Application{
         }
     }
 
+    //CityCircle.f = event.getSource();
+
+
 
     public void AddCity(String name, double xCord, double yCord){
         Town newTown = new Town(name);
@@ -241,9 +255,17 @@ public class MapFX extends Application{
 
         Text cityName = new Text(xCord + 20, yCord + 20, name);
 
+        cityCircleArray.add(test);
+
         center.getChildren().addAll(test,cityName);
+        System.out.println(cityCircleArray);
 
         graph.add(newTown);
+
+    }
+
+    public ArrayList<Circle> getList(){
+        return cityCircleArray;
     }
     public static void main(String[] args) {
         launch(args);

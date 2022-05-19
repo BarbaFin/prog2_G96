@@ -11,10 +11,14 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Objects;
 
 public class CityCircle extends Circle{
     private boolean selected = false;
-    public CityCircle(double x, double y, int i){
+    private MapFX getCircleList = new MapFX();
+    //private int i;
+    public CityCircle(double x, double y,int i){
         super(x,y,i);
         setFill(Color.BLUE);
         setOnMouseClicked(new clickHandler());
@@ -22,14 +26,32 @@ public class CityCircle extends Circle{
 
     class clickHandler implements EventHandler<MouseEvent> {
         public void handle(MouseEvent e) {
+            CityCircle f = (CityCircle) e.getSource();
 
-                if(selected){
-                    setFill(Color.RED);
+            for(int i = 0; i < getCircleList.getList().size(); i++){
+                getCircleList.getList().get(i);
 
-                }else {
-                    setFill(Color.BLUE);
-                }
-                selected =! selected;
+
+            }
+
+
+
+            if(selected){
+                setFill(Color.RED);
+            }else {
+                setFill(Color.BLUE);
+            }
+            selected =! selected;
+
+
+
+            //System.out.println(getCircleList);
+
+
+            //getCircleList.getList().size();
+
+            //System.out.println();
+
         }
     }
 }
