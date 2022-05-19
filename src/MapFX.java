@@ -229,7 +229,7 @@ public class MapFX extends Application{
             scene.setCursor(Cursor.DEFAULT);
             newPlaceButton.setDisable(false);
 
-            root.setOnMouseClicked(null);
+            center.setOnMouseClicked(null);
         }
     }
 
