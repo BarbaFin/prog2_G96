@@ -26,15 +26,15 @@ public class CityCircle extends Circle{
 
     class clickHandler implements EventHandler<MouseEvent> {
         public void handle(MouseEvent e) {
+
+            /*
             CityCircle f = (CityCircle) e.getSource();
 
-            for(int i = 0; i < getCircleList.getList().size(); i++){
+            for(int i = 0; i < 1; i++){
                 getCircleList.getList().get(i);
-
-
+                System.out.println(getCircleList);
             }
-
-
+            */
 
             if(selected){
                 setFill(Color.RED);
@@ -42,15 +42,6 @@ public class CityCircle extends Circle{
                 setFill(Color.BLUE);
             }
             selected =! selected;
-
-
-
-            //System.out.println(getCircleList);
-
-
-            //getCircleList.getList().size();
-
-            //System.out.println();
 
         }
     }

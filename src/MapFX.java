@@ -39,6 +39,7 @@ import java.io.*;
 import java.util.Optional;
 import javafx.scene.paint.Color;
 
+import static javafx.scene.paint.Color.BLUE;
 import static javafx.scene.paint.Color.RED;
 
 public class MapFX extends Application{
@@ -58,6 +59,8 @@ public class MapFX extends Application{
     private Circle circle;
     private BorderPane root;
     private Pane center, top;
+
+    private boolean selected = false;
 
     private ArrayList<Circle> cityCircleArray = new ArrayList<Circle>();
 
@@ -251,22 +254,52 @@ public class MapFX extends Application{
     public void AddCity(String name, double xCord, double yCord){
         Town newTown = new Town(name);
 
-        CityCircle test = new CityCircle(xCord,yCord,15);
+        //CityCircle test = new CityCircle(xCord,yCord,15);
+        circle = new Circle(xCord,yCord,15);
+
+        circle.setFill(BLUE);
+        circle.setOnMouseClicked(new clickHandler());
+        cityCircleArray.add(circle);
 
         Text cityName = new Text(xCord + 20, yCord + 20, name);
 
-        cityCircleArray.add(test);
 
-        center.getChildren().addAll(test,cityName);
-        System.out.println(cityCircleArray);
+        center.getChildren().addAll(circle,cityName);
+        //System.out.println(cityCircleArray);
 
         graph.add(newTown);
 
     }
 
-    public ArrayList<Circle> getList(){
-        return cityCircleArray;
+    class clickHandler implements EventHandler<MouseEvent> {
+        public void handle(MouseEvent e) {
+
+            /*
+            Circle f = (Circle)e.getSource();
+
+            for(int i = 0; i < cityCircleArray.size(); i++){
+                //cityCircleArray.get(i);
+
+                if(cityCircleArray.get(i) == null){
+                    cityCircleArray.get(i) = f;
+                    f.setFill(Color.RED);
+                }
+
+                System.out.println(cityCircleArray);
+            }
+            */
+
+
+
+            if(selected){
+                circle.setFill(Color.RED);
+            }else {
+                circle.setFill(Color.BLUE);
+            }
+
+        }
     }
+
     public static void main(String[] args) {
         launch(args);
     }
