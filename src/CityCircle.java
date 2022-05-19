@@ -14,7 +14,6 @@ import java.io.IOException;
 
 public class CityCircle extends Circle{
     private boolean selected = false;
-    private int amount;
     public CityCircle(double x, double y, int i){
         super(x,y,i);
         setFill(Color.BLUE);
@@ -24,16 +23,13 @@ public class CityCircle extends Circle{
     class clickHandler implements EventHandler<MouseEvent> {
         public void handle(MouseEvent e) {
 
-            if(selected){
-                setFill(Color.RED);
-                //amount += 1;
+                if(selected){
+                    setFill(Color.RED);
 
-            }else {
-                setFill(Color.BLUE);
+                }else {
+                    setFill(Color.BLUE);
+                }
                 selected =! selected;
-                System.out.println("LOL");
-                //amount -= 1;
-            }
         }
     }
 }
