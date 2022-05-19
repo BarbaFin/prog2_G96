@@ -15,17 +15,36 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 public class CityCircle extends Circle{
+    private final String name;
     private boolean selected = false;
     private MapFX getCircleList = new MapFX();
     //private int i;
-    public CityCircle(double x, double y,int i){
-        super(x,y,i);
+    public CityCircle(double x, double y,String name){
+        super(x,y, 15);
+        this.name = name;
         setFill(Color.BLUE);
+
         setOnMouseClicked(new clickHandler());
+    }
+
+    public boolean isSelected(){
+        return selected;
+    }
+
+    public void changeSelected(boolean i){
+        selected = i;
+
+
+        if(i){
+            setFill(Color.BLUE);
+        }else {
+            setFill(Color.RED);
+        }
     }
 
     class clickHandler implements EventHandler<MouseEvent> {
         public void handle(MouseEvent e) {
+
 
             /*
             CityCircle f = (CityCircle) e.getSource();
