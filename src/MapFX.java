@@ -145,6 +145,7 @@ public class MapFX extends Application{
 
         newPlaceButton.setOnAction(new newPlaceHandler());
         newConnectionButton.setOnAction(new connectHandler());
+        showConnectionButton.setOnAction(new showConnectHandler());
 
         center.getChildren().add(imageView);
 
@@ -222,12 +223,38 @@ public class MapFX extends Application{
         }
     };
 
+    //VISA CONNECTION
+    class showConnectHandler implements EventHandler<ActionEvent>{
+        @Override
+        public void handle(ActionEvent event) {
+            if(c1 == null ||c2 == null){
+                Alert alert = new Alert(Alert.AlertType.ERROR, "Mark two cities");
+                alert.showAndWait();
+            }else {
+                cities.getEdgeBetween(c1.getName(),c2.getName());
+
+                String connectionName = cities.getEdgeBetween(c1.getName(),c2.getName()).getName();
+                int connectionInt = cities.getEdgeBetween(c1.getName(),c2.getName()).getWeight();
+
+
+                ShowConnectionDialog dialog = new ShowConnectionDialog(c1.getName(), c1.getName(), connectionName, connectionInt );
+                dialog.setHeaderText("Connection from " + c1.getName() + " to " + c2.getName());
+
+                dialog.showAndWait();
+
+
+
+
+            }
+        }
+    }
+
     //LÄGGA TILL EN CONNECTION
     class connectHandler implements EventHandler<ActionEvent>{
         @Override
         public void handle(ActionEvent event) {
             if(c1 == null ||c2 == null){
-                Alert alert = new Alert(Alert.AlertType.ERROR, "Your name: ");
+                Alert alert = new Alert(Alert.AlertType.ERROR, "Mark two cities");
                 alert.showAndWait();
             }else {
                 ConnectionDialog dialog = new ConnectionDialog();
@@ -235,7 +262,17 @@ public class MapFX extends Application{
                 Optional<ButtonType> answer = dialog.showAndWait();
                 if(answer.isPresent() && answer.get() != ButtonType.OK){
                     return;
-                }else {
+                }
+
+                //FUNGERAR INTE
+                /*else if(ConnectionDialog.getName() == null || ConnectionDialog.getName().contains("[a-zA-Z]+") == false){
+                    Alert alert = new Alert(Alert.AlertType.ERROR, "Must contain a name");
+                    alert.showAndWait();
+                    //SKA IN EN TILL ALERT HÄR
+                }
+
+                 */
+                else {
                     String name = ConnectionDialog.getName();
                     int time = ConnectionDialog.getTime();
 
@@ -299,6 +336,7 @@ public class MapFX extends Application{
         center.getChildren().addAll(circle,cityName);
     }
 
+    //LÄGG TILL CIRKEL
     class ClickHandler implements EventHandler<MouseEvent> {
         public void handle(MouseEvent e) {
 
