@@ -169,15 +169,20 @@ public class MapFX extends Application{
         try {
             File file = new File("europa.graph");
             BufferedReader br = new BufferedReader(new FileReader(file));
-            String st;
-            while ((st = br.readLine()) != null)
-                System.out.println(st);
+            String line;
+
+            while ((line = br.readLine()) != null)
+                if (!line.isEmpty()) {
+                    String[] tokens = line.split(";", 4);
+                    System.out.println(line);
+                }
+
         } catch (FileNotFoundException noFile) {
             Alert alert = new Alert(Alert.AlertType.ERROR, "No such file found!");
             alert.showAndWait();
         }
         catch (IOException e) {
-            //throw new RuntimeException(e);
+            throw new RuntimeException(e);
         }
     }
 
