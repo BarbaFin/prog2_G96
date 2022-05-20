@@ -27,6 +27,8 @@ public class ListGraph<T> implements Graph<T> {
         if (!nodes.containsKey(x) || !nodes.containsKey(y)) {
             throw new NoSuchElementException();
         }
+
+        System.out.println(x +" "+  y);
         if(weight < 0){
             throw new IllegalArgumentException();
         }

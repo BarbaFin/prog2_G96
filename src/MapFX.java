@@ -64,10 +64,10 @@ public class MapFX extends Application{
     private BorderPane root;
     private Pane center, top;
 
-    private boolean selected = false;
-
     private ArrayList<Circle> cityCircleArray = new ArrayList<Circle>();
-    //private  ArrayList<Town> townList
+
+    ListGraph cities = new ListGraph();
+
     private ListGraph graph = new ListGraph();
 
     private HashMap<String, String> map = new HashMap<String, String>();
@@ -226,7 +226,24 @@ public class MapFX extends Application{
     class connectHandler implements EventHandler<ActionEvent>{
         @Override
         public void handle(ActionEvent event) {
-            System.out.println("LOL");
+            if(c1 == null ||c2 == null){
+                Alert alert = new Alert(Alert.AlertType.ERROR, "Your name: ");
+                alert.showAndWait();
+            }else {
+                ConnectionDialog dialog = new ConnectionDialog();
+
+                Optional<ButtonType> answer = dialog.showAndWait();
+                if(answer.isPresent() && answer.get() != ButtonType.OK){
+                    return;
+                }else {
+                    String name = ConnectionDialog.getName();
+                    int time = ConnectionDialog.getTime();
+
+                    cities.connect(c1.getName(),c2.getName(),name,time);
+
+                    System.out.println("Städer: " + cities);
+                }
+            }
         }
     }
 
@@ -267,14 +284,9 @@ public class MapFX extends Application{
         }
     }
 
-    //CityCircle.f = event.getSource();
-
-
 
     public void addCity(String name, double xCord, double yCord){
 
-
-        //CityCircle test = new CityCircle(xCord,yCord,15);
         CityCircle circle = new CityCircle(xCord,yCord,name);
 
         circle.setFill(BLUE);
@@ -282,13 +294,9 @@ public class MapFX extends Application{
         cityCircleArray.add(circle);
 
         Text cityName = new Text(xCord + 20, yCord + 20, name);
-
+        cities.add(circle.getName());
 
         center.getChildren().addAll(circle,cityName);
-        //System.out.println(cityCircleArray);
-
-        //graph.add(newTown);
-
     }
 
     class ClickHandler implements EventHandler<MouseEvent> {

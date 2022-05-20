@@ -25,6 +25,10 @@ public class CityCircle extends Circle{
         setFill(Color.BLUE);
     }
 
+    public String getName(){
+        return name;
+    }
+
     public boolean isSelected(){
         return selected;
     }
