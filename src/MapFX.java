@@ -35,6 +35,7 @@ import java.io.FileNotFoundException;
 import java.io.ObjectInputStream;
 import java.util.*;
 import java.io.*;
+import java.util.List;
 
 import javafx.scene.paint.Color;
 
@@ -164,36 +165,16 @@ public class MapFX extends Application{
     };
 
     private void openFile(){
-        String line;
-        try {
-            BufferedReader reader = new BufferedReader(new FileReader("europa.graph"));
+//Man läser in filen (graph, hur?), itererar över den med hjälp av en lista och typ String[] tokens = line.split(";");
+        //try {
 
-            while ((line = reader.readLine()) != null)
-        {
-            String[] parts = line.split(";", 4);
-            if (parts.length >= 4)
-            {
-                String key = parts[0];
-                String value = parts[1];
-                map.put(key, value);
-            } else {
-                System.out.println("ignoring line: " + line);
-            }
-        }
-            for (String key : map.keySet())
-            {
-                System.out.println(key + ";" + map.get(key));
-            }
-            reader.close();
-        } catch (FileNotFoundException noFile) {
-            System.out.println("hej");
-            //throw new FileNotFoundException("no file found you dick", noFile);
+        //} catch (FileNotFoundException noFile) {
             //Alert alert = new Alert(Alert.AlertType.ERROR, "test");
             //alert.showAndWait();
-        }
-        catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        //}
+        //catch (IOException e) {
+            //throw new RuntimeException(e);
+        //}
     }
 
     class openHandler implements EventHandler<ActionEvent> {
