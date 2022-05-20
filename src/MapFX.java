@@ -171,10 +171,15 @@ public class MapFX extends Application{
             String line;
 
             while ((line = br.readLine()) != null)
-                if (!line.isEmpty()) {
-                    //String[] tokens = line.split(";");
+                //if (!line.isEmpty()) {
+                //String[] tokens = line.split(";", 3);
                     System.out.println(line);
-                }
+
+                //}
+
+            //for (int i =0; i < tokens.length; i++) {
+
+            //}
 
         } catch (FileNotFoundException noFile) {
             Alert alert = new Alert(Alert.AlertType.ERROR, "No such file found!");
