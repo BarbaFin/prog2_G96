@@ -173,9 +173,8 @@ public class MapFX extends Application{
             while ((st = br.readLine()) != null)
                 System.out.println(st);
         } catch (FileNotFoundException noFile) {
-            System.out.println("hej");
-            //Alert alert = new Alert(Alert.AlertType.ERROR, "test");
-            //alert.showAndWait();
+            Alert alert = new Alert(Alert.AlertType.ERROR, "No such file found!");
+            alert.showAndWait();
         }
         catch (IOException e) {
             //throw new RuntimeException(e);
