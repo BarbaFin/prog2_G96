@@ -166,15 +166,20 @@ public class MapFX extends Application{
 
     private void openFile(){
 //Man läser in filen (graph, hur?), itererar över den med hjälp av en lista och typ String[] tokens = line.split(";");
-        //try {
-
-        //} catch (FileNotFoundException noFile) {
+        try {
+            File file = new File("europa.graph");
+            BufferedReader br = new BufferedReader(new FileReader(file));
+            String st;
+            while ((st = br.readLine()) != null)
+                System.out.println(st);
+        } catch (FileNotFoundException noFile) {
+            System.out.println("hej");
             //Alert alert = new Alert(Alert.AlertType.ERROR, "test");
             //alert.showAndWait();
-        //}
-        //catch (IOException e) {
+        }
+        catch (IOException e) {
             //throw new RuntimeException(e);
-        //}
+        }
     }
 
     class openHandler implements EventHandler<ActionEvent> {
