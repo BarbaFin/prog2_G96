@@ -60,7 +60,7 @@ public class MapFX extends Application{
 
     private int x,y;
 
-    private CityCircle c1, c2;
+    private CityCircle c1, c2 = null;
     private BorderPane root;
     private Pane center, top;
 
@@ -289,16 +289,20 @@ public class MapFX extends Application{
 
             if(f.isSelected()){
                 f.changeSelected(false);
+
+                //När man avmarkerar
                 if(f == c1){
                     c1 = null;
                 }else{
                     c2 = null;
                 }
-            }else {
-                f.changeSelected(true);
+
+            }else { //När man markerar
                 if(c1 == null){
+                    f.changeSelected(true);
                     c1 = f;
                 }else if(c2 == null && f != c1){
+                    f.changeSelected(true);
                     c2 = f;
                 }
             }

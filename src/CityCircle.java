@@ -23,8 +23,6 @@ public class CityCircle extends Circle{
         super(x,y, 15);
         this.name = name;
         setFill(Color.BLUE);
-
-        setOnMouseClicked(new clickHandler());
     }
 
     public boolean isSelected(){
@@ -34,34 +32,10 @@ public class CityCircle extends Circle{
     public void changeSelected(boolean i){
         selected = i;
 
-
         if(i){
-            setFill(Color.BLUE);
-        }else {
             setFill(Color.RED);
-        }
-    }
-
-    class clickHandler implements EventHandler<MouseEvent> {
-        public void handle(MouseEvent e) {
-
-
-            /*
-            CityCircle f = (CityCircle) e.getSource();
-
-            for(int i = 0; i < 1; i++){
-                getCircleList.getList().get(i);
-                System.out.println(getCircleList);
-            }
-            */
-
-            if(selected){
-                setFill(Color.RED);
-            }else {
-                setFill(Color.BLUE);
-            }
-            selected =! selected;
-
+        }else {
+            setFill(Color.BLUE);
         }
     }
 }
