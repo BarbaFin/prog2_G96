@@ -165,7 +165,6 @@ public class MapFX extends Application{
     };
 
     private void openFile(){
-//Man läser in filen (graph, hur?), itererar över den med hjälp av en lista och typ String[] tokens = line.split(";");
         try {
             File file = new File("europa.graph");
             BufferedReader br = new BufferedReader(new FileReader(file));
@@ -173,7 +172,7 @@ public class MapFX extends Application{
 
             while ((line = br.readLine()) != null)
                 if (!line.isEmpty()) {
-                    String[] tokens = line.split(";", 4);
+                    //String[] tokens = line.split(";");
                     System.out.println(line);
                 }
 
