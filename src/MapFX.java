@@ -33,11 +33,9 @@ import java.awt.image.BufferedImage;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.ObjectInputStream;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Map;
+import java.util.*;
 import java.io.*;
-import java.util.Optional;
+
 import javafx.scene.paint.Color;
 
 
@@ -70,6 +68,8 @@ public class MapFX extends Application{
     private ArrayList<Circle> cityCircleArray = new ArrayList<Circle>();
     //private  ArrayList<Town> townList
     private ListGraph graph = new ListGraph();
+
+    private HashMap<String, String> map = new HashMap<String, String>();
 
     @Override
     public void start(Stage primaryStage) {
@@ -130,10 +130,11 @@ public class MapFX extends Application{
         changeConnectionButton.setLayoutX(400);
         top.getChildren().add(changeConnectionButton);
 
-        File file = new File("europa.graph");
-        if (file.exists()){
-            openFile();
-        }
+        //File file = new File("europa.graph");
+        //if (file.exists()){
+        //    openFile();
+        //}
+
 
         vbox.getChildren().add(root);
 
@@ -163,16 +164,34 @@ public class MapFX extends Application{
     };
 
     private void openFile(){
+        String line;
         try {
-            FileInputStream graph = new FileInputStream("europa.graph");
-            ObjectInputStream in = new ObjectInputStream(graph);;
-            in.close();
-            graph.close();
-        } catch (FileNotFoundException noFile) {
-            Alert alert = new Alert(Alert.AlertType.ERROR, "test");
+            BufferedReader reader = new BufferedReader(new FileReader("europa.graph"));
 
-            alert.showAndWait();
-        } catch (IOException e) {
+            while ((line = reader.readLine()) != null)
+        {
+            String[] parts = line.split(";", 4);
+            if (parts.length >= 4)
+            {
+                String key = parts[0];
+                String value = parts[1];
+                map.put(key, value);
+            } else {
+                System.out.println("ignoring line: " + line);
+            }
+        }
+            for (String key : map.keySet())
+            {
+                System.out.println(key + ";" + map.get(key));
+            }
+            reader.close();
+        } catch (FileNotFoundException noFile) {
+            System.out.println("hej");
+            //throw new FileNotFoundException("no file found you dick", noFile);
+            //Alert alert = new Alert(Alert.AlertType.ERROR, "test");
+            //alert.showAndWait();
+        }
+        catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
