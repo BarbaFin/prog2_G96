@@ -23,6 +23,8 @@ import javafx.scene.image.WritableImage;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.shape.Circle;
+import javafx.scene.shape.Line;
+import javafx.scene.shape.Polyline;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -51,7 +53,7 @@ public class MapFX extends Application{
     private Image image;
     private ImageView imageView;
     private Scene scene;
-    private Button newPlaceButton, newConnectionButton, changeConnectionButton, findPathButton;
+    private Button newPlaceButton, newConnectionButton, changeConnectionButton, findPathButton,showConnectionButton;
     private VBox vbox;
 
     private int amount = 0;
@@ -66,7 +68,7 @@ public class MapFX extends Application{
 
     private ArrayList<Circle> cityCircleArray = new ArrayList<Circle>();
 
-    ListGraph cities = new ListGraph();
+    ListGraph<CityCircle> cities = new ListGraph<>();
 
     private ListGraph graph = new ListGraph();
 
@@ -114,7 +116,7 @@ public class MapFX extends Application{
         findPathButton.setLayoutX(10);
         top.getChildren().add(findPathButton);
 
-        Button showConnectionButton = new Button("Show Connection");
+        showConnectionButton = new Button("Show Connection");
         showConnectionButton.setLayoutX(80);
         top.getChildren().add(showConnectionButton);
 
@@ -146,6 +148,8 @@ public class MapFX extends Application{
         newPlaceButton.setOnAction(new newPlaceHandler());
         newConnectionButton.setOnAction(new connectHandler());
         showConnectionButton.setOnAction(new showConnectHandler());
+        changeConnectionButton.setOnAction(new changeTimeHandler());
+        findPathButton.setOnAction(new seekPathHandler());
 
         center.getChildren().add(imageView);
 
@@ -211,7 +215,6 @@ public class MapFX extends Application{
         }
     }
 
-
     //FÖR ATT LÄGGA TILL EN NY STAD PÅ KARTAN
     class newPlaceHandler implements EventHandler<ActionEvent> {
         public void handle(ActionEvent e)
@@ -223,33 +226,32 @@ public class MapFX extends Application{
         }
     };
 
-    //VISA CONNECTION
+    //VISA CONNECTION, ej klar
     class showConnectHandler implements EventHandler<ActionEvent>{
         @Override
         public void handle(ActionEvent event) {
             if(c1 == null ||c2 == null){
                 Alert alert = new Alert(Alert.AlertType.ERROR, "Mark two cities");
                 alert.showAndWait();
-            }else {
-                cities.getEdgeBetween(c1.getName(),c2.getName());
+            } else if (cities.getEdgeBetween(c1,c2) == null) {
+                Alert alert = new Alert(Alert.AlertType.ERROR, "No connection between cities!");
+                alert.showAndWait();
+            } else {
+                cities.getEdgeBetween(c1,c2);
 
-                String connectionName = cities.getEdgeBetween(c1.getName(),c2.getName()).getName();
-                int connectionInt = cities.getEdgeBetween(c1.getName(),c2.getName()).getWeight();
+                String connectionName = cities.getEdgeBetween(c1,c2).getName();
+                int connectionInt = cities.getEdgeBetween(c1,c2).getWeight();
 
 
-                ShowConnectionDialog dialog = new ShowConnectionDialog(c1.getName(), c1.getName(), connectionName, connectionInt );
+                ShowConnectionDialog dialog = new ShowConnectionDialog(c1.getName(), c1.getName(), connectionName, connectionInt, 1);
                 dialog.setHeaderText("Connection from " + c1.getName() + " to " + c2.getName());
 
                 dialog.showAndWait();
-
-
-
-
             }
         }
     }
 
-    //LÄGGA TILL EN CONNECTION
+    //LÄGGA TILL EN CONNECTION, ej klar
     class connectHandler implements EventHandler<ActionEvent>{
         @Override
         public void handle(ActionEvent event) {
@@ -263,7 +265,6 @@ public class MapFX extends Application{
                 if(answer.isPresent() && answer.get() != ButtonType.OK){
                     return;
                 }
-
                 //FUNGERAR INTE
                 /*else if(ConnectionDialog.getName() == null || ConnectionDialog.getName().contains("[a-zA-Z]+") == false){
                     Alert alert = new Alert(Alert.AlertType.ERROR, "Must contain a name");
@@ -276,10 +277,71 @@ public class MapFX extends Application{
                     String name = ConnectionDialog.getName();
                     int time = ConnectionDialog.getTime();
 
-                    cities.connect(c1.getName(),c2.getName(),name,time);
+                    cities.connect(c1,c2,name,time);
 
-                    System.out.println("Städer: " + cities);
+                    Line line = new Line(c1.getCenterX(), c1.getCenterY(), c2.getCenterX(), c2.getCenterY());
+                    center.getChildren().addAll(line);
                 }
+            }
+        }
+    }
+
+    //SE VÄGEN MELLAN TVÅ STÄDER
+    class seekPathHandler implements EventHandler<ActionEvent>{
+        @Override
+        public void handle(ActionEvent event) {
+            if(c1 == null || c2 == null){
+                Alert alert = new Alert(Alert.AlertType.ERROR, "Mark two cities!");
+                alert.showAndWait();
+            }
+            if(!cities.pathExists(c1,c2)){
+                Alert alert = new Alert(Alert.AlertType.ERROR, "No connection between cities!");
+                alert.showAndWait();
+            }
+
+            else {
+
+                cities.getEdgeBetween(c1,c2);
+                String connectionName = cities.getEdgeBetween(c1,c2).getName();
+                int connectionInt = cities.getEdgeBetween(c1,c2).getWeight();
+                cities.getPath(c1,c2);
+
+
+                PathDialog dialog = new PathDialog(c1.getName(),c2.getName(),connectionName,connectionInt, "HEYO");
+
+                dialog.setHeaderText("Connection from " + c1.getName() + " to " + c2.getName());
+                dialog.showAndWait();
+
+
+                dialog.setHeaderText("Connection from " + c1.getName() + " to " + c2.getName());
+                dialog.showAndWait();
+            }
+        }
+    }
+
+    //ÄNDRA EN CONNECTION TIME
+    class changeTimeHandler implements EventHandler<ActionEvent>{
+        @Override
+        public void handle(ActionEvent event) {
+            if(c1 == null || c2 == null){
+                Alert alert = new Alert(Alert.AlertType.ERROR, "Mark two cities!");
+                alert.showAndWait();
+            }
+            if(!cities.pathExists(c1,c2)){
+                Alert alert = new Alert(Alert.AlertType.ERROR, "No connection between cities!");
+                alert.showAndWait();
+            }
+            else {
+                cities.getEdgeBetween(c1,c2);
+                String connectionName = cities.getEdgeBetween(c1,c2).getName();
+                int connectionInt = cities.getEdgeBetween(c1,c2).getWeight();
+
+                ShowConnectionDialog dialog = new ShowConnectionDialog(c1.getName(), c1.getName(), connectionName, connectionInt, 2);
+
+                dialog.setHeaderText("Connection from " + c1.getName() + " to " + c2.getName());
+                dialog.showAndWait();
+
+                cities.setConnectionWeight(c1, c2, dialog.getTime());
             }
         }
     }
@@ -321,7 +383,6 @@ public class MapFX extends Application{
         }
     }
 
-
     public void addCity(String name, double xCord, double yCord){
 
         CityCircle circle = new CityCircle(xCord,yCord,name);
@@ -331,7 +392,7 @@ public class MapFX extends Application{
         cityCircleArray.add(circle);
 
         Text cityName = new Text(xCord + 20, yCord + 20, name);
-        cities.add(circle.getName());
+        cities.add(circle);
 
         center.getChildren().addAll(circle,cityName);
     }

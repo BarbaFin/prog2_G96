@@ -22,6 +22,12 @@ public class ConnectionDialog extends Alert {
         grid.addRow(1, new Label("Time: "), time);
 
         getDialogPane().setContent(grid);
+        if(time == null && name == null){
+
+        }else {
+            time.clear();
+            name.clear();
+        }
     }
 
     public static String getName(){
