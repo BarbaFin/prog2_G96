@@ -17,22 +17,18 @@ import java.util.Objects;
 public class CityCircle extends Circle{
     private final String name;
     private boolean selected = false;
-    private MapFX getCircleList = new MapFX();
-    //private int i;
+
     public CityCircle(double x, double y,String name){
         super(x,y, 15);
         this.name = name;
         setFill(Color.BLUE);
     }
-
     public String getName(){
         return name;
     }
-
     public boolean isSelected(){
         return selected;
     }
-
     public void changeSelected(boolean i){
         selected = i;
 
@@ -41,5 +37,8 @@ public class CityCircle extends Circle{
         }else {
             setFill(Color.BLUE);
         }
+    }
+    public String toString(){
+        return name;
     }
 }

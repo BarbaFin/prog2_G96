@@ -27,8 +27,6 @@ public class ListGraph<T> implements Graph<T> {
         if (!nodes.containsKey(x) || !nodes.containsKey(y)) {
             throw new NoSuchElementException();
         }
-
-        System.out.println(x +" "+  y);
         if(weight < 0){
             throw new IllegalArgumentException();
         }
@@ -118,7 +116,7 @@ public class ListGraph<T> implements Graph<T> {
 
         if(pathExists(from, to)){
             Map<T, T> connection = new HashMap<>();
-            depthFirstConnection(from,to, connection);
+            depthFirstConnection(from,null, connection);
             LinkedList<Edge<T>> path = new LinkedList<>();
 
             T current = to;
@@ -137,9 +135,9 @@ public class ListGraph<T> implements Graph<T> {
 
     private void depthFirstConnection(T from, T to, Map<T, T> connection) {
         connection.put(from, to);
-        for (Edge<T> edge : nodes.get(to)) {
+        for (Edge<T> edge : nodes.get(from)) {
             if (!connection.containsKey(edge.getDestination())) {
-                depthFirstConnection(edge.getDestination(), to, connection);
+                depthFirstConnection(edge.getDestination(), from, connection);
             }
         }
     }

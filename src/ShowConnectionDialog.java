@@ -22,9 +22,6 @@ public class ShowConnectionDialog extends Alert {
         grid.setVgap(5);
         name.setEditable(false);
 
-        //DET SKA STÅ NAME: (STRING I TEXTFIELD, EJ RÖRBART)
-        //DET SKA STÅ TIME: (TIME I TEXTFIELD, EJ RÖRBART)
-
         if(nr == 1){
             name.setEditable(false);
             time.setEditable(false);
@@ -42,7 +39,6 @@ public class ShowConnectionDialog extends Alert {
         grid.addRow(1, new Label("Time: "), time);
 
         getDialogPane().setContent(grid);
-
     }
 
     public int getTime(){

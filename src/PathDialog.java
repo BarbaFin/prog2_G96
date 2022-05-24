@@ -4,29 +4,26 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
+
+import java.util.List;
 
 public class PathDialog extends Alert {
+    public PathDialog(List<Edge <CityCircle> > path){
 
-    private TextArea pathText = new TextArea();
-
-    private String c1, c2, edgeName, text;
-    private int time;
-
-    public PathDialog(String c1, String c2, String edgeName, int time, String text ){
         super(AlertType.CONFIRMATION);
-        GridPane grid = new GridPane();
-        grid.setPadding(new Insets(10));
-        grid.setAlignment(Pos.CENTER);
-        grid.setHgap(5);
-        grid.setVgap(5);
+        Pane pane = new Pane();
+        TextArea area = new TextArea();
+        int total = 0;
+        String str = "";
+        for(Edge<CityCircle> edge : path){
+            total += edge.getWeight();
+            str += "to " + edge.getDestination() + " by " + edge.getName() + " takes " + edge.getWeight() + "\n";
+        }
 
-        grid.addRow(0,pathText);
-        pathText.setText(text);
-
-        getDialogPane().setContent(grid);
-    }
-
-    public TextArea getPathText() {
-        return pathText;
+        area.setText(str + "Total: " + total);
+        area.setDisable(true);
+        pane.getChildren().add(area);
+        getDialogPane().setContent(pane);
     }
 }
