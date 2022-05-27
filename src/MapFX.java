@@ -69,7 +69,9 @@ public class MapFX extends Application{
     private ArrayList<Circle> cityCircleArray = new ArrayList<Circle>();
     ListGraph<CityCircle> cities = new ListGraph<>();
 
-    private HashMap<String, String> map = new HashMap<String, String>();
+    HashMap<String, CityCircle> nodes = new HashMap<>();
+
+    private String fileName;
 
     @Override
     public void start(Stage primaryStage) {
@@ -162,30 +164,49 @@ public class MapFX extends Application{
     };
 
     private void openFile(){
+
         try {
-            File file = new File("europa.graph");
-            BufferedReader br = new BufferedReader(new FileReader(file));
-            String line;
+            BufferedReader in = new BufferedReader(new FileReader("europa.graph"));
 
-            while ((line = br.readLine()) != null)
-                //if (!line.isEmpty()) {
-                //String[] tokens = line.split(";", 3);
-                    System.out.println(line);
+            String line = in.readLine();
+            fileName = line;
 
-                //}
+            Image image = new Image(fileName);
+            imageView.setImage(image);
 
-            //for (int i =0; i < tokens.length; i++) {
+            line = in.readLine();
 
-            //}
+            String[] tokens = line.split(";");
+            for (int i = 0; i < tokens.length; i += 3) {
+                String name = tokens[i];
+                double x = Double.parseDouble(tokens[i + 1]);
+                double y = Double.parseDouble(tokens[i + 2]);
+                CityCircle location = new CityCircle(x, y, name);
+                nodes.put(name, location);
+                cities.add(location);
+                center.getChildren().add(location);
+                location.setOnMouseClicked(new ClickHandler());
+            }
 
-        } catch (FileNotFoundException noFile) {
-            Alert alert = new Alert(Alert.AlertType.ERROR, "No such file found!");
-            alert.showAndWait();
-        }
-        catch (IOException e) {
-            throw new RuntimeException(e);
+
+
+            while ((line = in.readLine()) != null) {
+                tokens = line.split(";");
+                CityCircle from = nodes.get(tokens[0]);
+                CityCircle to = nodes.get(tokens[1]);
+                String name = tokens[2];
+                int time = Integer.parseInt(tokens[3]);
+                if (cities.getEdgeBetween(from, to) == null)
+                    cities.connect(from, to, name, time);
+            }
+        } catch (FileNotFoundException e) {
+            System.out.println("File not found.");
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
+
+
 
     class openHandler implements EventHandler<ActionEvent> {
         public void handle(ActionEvent e)
