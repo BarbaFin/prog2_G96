@@ -73,6 +73,8 @@ public class MapFX extends Application{
 
     private String fileName;
 
+    final static String outputFilePath = "test.txt";
+
     @Override
     public void start(Stage primaryStage) {
 
@@ -144,6 +146,7 @@ public class MapFX extends Application{
 
         newMap.setOnAction(new newMapHandler());
         open.setOnAction(new openHandler());
+        save.setOnAction(new saveHandler());
         saveImage.setOnAction(new saveImageHandler());
 
         scene = new Scene(vbox,620,780);
@@ -212,6 +215,35 @@ public class MapFX extends Application{
             openFile();
         }
     };
+
+    class saveHandler implements EventHandler<ActionEvent> {
+        public void handle(ActionEvent e) {
+            File file = new File(outputFilePath);
+            BufferedWriter bf = null;
+            //try {
+
+                // create new BufferedWriter for the output file
+                //bf = new BufferedWriter(new FileWriter(file));
+
+                // iterate map entries
+                //for (iterera över rätt lista) {
+
+                    // put key and value separated by a colon
+
+                    // new line
+
+                    //bf.newLine();
+                //}
+
+                //bf.flush();
+                //bf.close();
+            //}
+            //catch (IOException i) {
+            //    i.printStackTrace();
+            //}
+
+        }
+    }
 
     class saveImageHandler implements EventHandler<ActionEvent> {
         public void handle(ActionEvent e) {
