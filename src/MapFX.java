@@ -127,11 +127,6 @@ public class MapFX extends Application{
         changeConnectionButton.setLayoutX(400);
         top.getChildren().add(changeConnectionButton);
 
-        //File file = new File("europa.graph");
-        //if (file.exists()){
-        //    openFile();
-        //}
-
 
         vbox.getChildren().add(root);
 
@@ -158,10 +153,14 @@ public class MapFX extends Application{
     class newMapHandler implements EventHandler<ActionEvent> {
         public void handle(ActionEvent e)
         {
-            imageView.setVisible(true);
-            imageView.setImage(new Image("europa.gif"));
+            newMap();
         }
     };
+
+    private void newMap(){
+        imageView.setVisible(true);
+        imageView.setImage(new Image("europa.gif"));
+    }
 
     private void openFile(){
 
@@ -173,6 +172,7 @@ public class MapFX extends Application{
 
             Image image = new Image(fileName);
             imageView.setImage(image);
+            newMap();
 
             line = in.readLine();
 
@@ -187,8 +187,6 @@ public class MapFX extends Application{
                 center.getChildren().add(location);
                 location.setOnMouseClicked(new ClickHandler());
             }
-
-
 
             while ((line = in.readLine()) != null) {
                 tokens = line.split(";");
