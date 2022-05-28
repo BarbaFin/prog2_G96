@@ -227,8 +227,7 @@ public class MapFX extends Application{
                 BufferedWriter bf = null;
 
                 bf = new BufferedWriter(new FileWriter(file));
-                //HUR FÅR JAG BILDNAMNET EUROPA.GIF HALLÅÅÅ
-                bf.write("file:" + imageView.toString());
+                bf.write(image.getUrl());
                 bf.newLine();
 
                 //HÄR SKA VI FÅ IN RADEN MED STÄDER OCH KORDINATER PÅ NÅGOT SÄTT???
