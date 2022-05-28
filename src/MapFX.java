@@ -227,19 +227,18 @@ public class MapFX extends Application{
                 BufferedWriter bf = null;
 
                 bf = new BufferedWriter(new FileWriter(file));
-                bf.write("file:" + outputFilePath);
+                //HUR FÅR JAG BILDNAMNET EUROPA.GIF HALLÅÅÅ
+                bf.write("file:" + imageView.toString());
                 bf.newLine();
 
-                //for() {
-                    //objectOut.writeObject(c);
-                //}
-                //objectOut.close();
-                bf.newLine();
+                //HÄR SKA VI FÅ IN RADEN MED STÄDER OCH KORDINATER PÅ NÅGOT SÄTT???
 
-                for(Object town : cities.getNodes()) {
-                    for(Edge edge : cities.getEdgesFrom(c1)) {
-                        bf.write(town + ";" + edge);
-                        bf.newLine();
+                for(CityCircle town : cities.getNodes()) {
+                    if(cities.getEdgeBetween(town, c2) != null) {
+                        for(Edge edge : cities.getEdgesFrom(town)) {
+                            bf.write(town + ";" + edge);
+                            bf.newLine();
+                        }
                     }
                 }
                 bf.flush();
@@ -248,7 +247,6 @@ public class MapFX extends Application{
             catch (IOException i) {
                 i.printStackTrace();
             }
-        //System.out.println(cities);
         }
     }
 
