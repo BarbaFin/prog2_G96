@@ -32,6 +32,6 @@ public class Edge<T> {
     }
 
     public String toString() {
-        return "till " + destination + " med " + name + " tar " + weight;
+        return  destination + ";"+ name + ";" + weight;
     }
 }

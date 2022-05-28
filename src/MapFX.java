@@ -38,6 +38,7 @@ import java.awt.image.BufferedImage;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.*;
 import java.io.*;
 import java.util.List;
@@ -67,6 +68,7 @@ public class MapFX extends Application{
     private BorderPane root;
     private Pane center, top;
     private ArrayList<Circle> cityCircleArray = new ArrayList<Circle>();
+    //This is the ONE:
     ListGraph<CityCircle> cities = new ListGraph<>();
 
     HashMap<String, CityCircle> nodes = new HashMap<>();
@@ -218,30 +220,35 @@ public class MapFX extends Application{
 
     class saveHandler implements EventHandler<ActionEvent> {
         public void handle(ActionEvent e) {
-            File file = new File(outputFilePath);
-            BufferedWriter bf = null;
-            //try {
+            try {
+                File file = new File(outputFilePath);
+                //FileOutputStream fileOut = new FileOutputStream(outputFilePath);
+                //ObjectOutputStream objectOut = new ObjectOutputStream(fileOut);
+                BufferedWriter bf = null;
 
-                // create new BufferedWriter for the output file
-                //bf = new BufferedWriter(new FileWriter(file));
+                bf = new BufferedWriter(new FileWriter(file));
+                bf.write("file:" + outputFilePath);
+                bf.newLine();
 
-                // iterate map entries
-                //for (iterera över rätt lista) {
-
-                    // put key and value separated by a colon
-
-                    // new line
-
-                    //bf.newLine();
+                //for() {
+                    //objectOut.writeObject(c);
                 //}
+                //objectOut.close();
+                bf.newLine();
 
-                //bf.flush();
-                //bf.close();
-            //}
-            //catch (IOException i) {
-            //    i.printStackTrace();
-            //}
-
+                for(Object town : cities.getNodes()) {
+                    for(Edge edge : cities.getEdgesFrom(c1)) {
+                        bf.write(town + ";" + edge);
+                        bf.newLine();
+                    }
+                }
+                bf.flush();
+                bf.close();
+            }
+            catch (IOException i) {
+                i.printStackTrace();
+            }
+        //System.out.println(cities);
         }
     }
 
