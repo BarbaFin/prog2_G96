@@ -100,6 +100,7 @@ public class MapFX extends Application{
 
         MenuItem exit = new MenuItem("Exit");
         fileMenu.getItems().add(exit);
+        //Exit måste vara en egen metod där vi har IF sats om de finns osaparade ändringar:
         exit.setOnAction(e -> Platform.exit());
 
         root = new BorderPane();
