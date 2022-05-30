@@ -74,7 +74,7 @@ public class MapFX extends Application{
     HashMap<String, CityCircle> nodes = new HashMap<>();
 
     private String fileName;
-
+//Nedan måste ändras till europa.graph:
     final static String outputFilePath = "test.txt";
 
     @Override
