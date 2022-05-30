@@ -1,33 +1,23 @@
 import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.Cursor;
-import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
-import javafx.scene.effect.Light;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
-import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
-import javafx.scene.shape.Polyline;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
-import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -35,26 +25,17 @@ import javafx.stage.Stage;
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.util.*;
 import java.io.*;
 import java.util.List;
 
-import javafx.scene.paint.Color;
-
-
 
 import static javafx.scene.paint.Color.BLUE;
-import static javafx.scene.paint.Color.RED;
 
 public class MapFX extends Application{
-    private MenuItem newMap;
 
-    private MenuItem open;
-    private MenuItem saveImage;
+    private MenuItem saveImage, exit, newMap, open, save;
     private Image image;
     private ImageView imageView;
     private Scene scene;
@@ -67,19 +48,21 @@ public class MapFX extends Application{
     private CityCircle c1, c2 = null;
     private BorderPane root;
     private Pane center, top;
-    private ArrayList<Circle> cityCircleArray = new ArrayList<Circle>();
+    private Stage primaryStage;
+
+    private boolean changes = false;
     //This is the ONE:
     ListGraph<CityCircle> cities = new ListGraph<>();
 
     HashMap<String, CityCircle> nodes = new HashMap<>();
-
+    ArrayList<CityCircle> allCities = new ArrayList<>();
     private String fileName;
 //Nedan måste ändras till europa.graph:
     final static String outputFilePath = "test.txt";
 
     @Override
     public void start(Stage primaryStage) {
-
+        this.primaryStage = primaryStage;
         vbox = new VBox();
         MenuBar menuBar = new MenuBar();
         vbox.getChildren().add(menuBar);
@@ -89,19 +72,17 @@ public class MapFX extends Application{
         newMap = new MenuItem("New Map");
         fileMenu.getItems().add(newMap);
 
-        MenuItem open = new MenuItem("Open");
+        open = new MenuItem("Open");
         fileMenu.getItems().add(open);
 
-        MenuItem save = new MenuItem("Save");
+        save = new MenuItem("Save");
         fileMenu.getItems().add(save);
 
         saveImage = new MenuItem("Save Image");
         fileMenu.getItems().add(saveImage);
 
-        MenuItem exit = new MenuItem("Exit");
+        exit = new MenuItem("Exit");
         fileMenu.getItems().add(exit);
-        //Exit måste vara en egen metod där vi har IF sats om de finns osaparade ändringar:
-        exit.setOnAction(e -> Platform.exit());
 
         root = new BorderPane();
         root.setPadding(new Insets(7));
@@ -132,10 +113,9 @@ public class MapFX extends Application{
         changeConnectionButton.setLayoutX(400);
         top.getChildren().add(changeConnectionButton);
 
-
         vbox.getChildren().add(root);
 
-        image = new Image("europa.gif");
+        image = new Image("file:europa.gif");
         imageView = new ImageView(image);
         imageView.setVisible(false);
 
@@ -147,12 +127,13 @@ public class MapFX extends Application{
 
         center.getChildren().add(imageView);
 
+        exit.setOnAction(new exitHandler());
         newMap.setOnAction(new newMapHandler());
         open.setOnAction(new openHandler());
         save.setOnAction(new saveHandler());
         saveImage.setOnAction(new saveImageHandler());
 
-        scene = new Scene(vbox,620,780);
+        scene = new Scene(vbox);
         primaryStage.setScene(scene);
         primaryStage.show();
     }
@@ -166,23 +147,25 @@ public class MapFX extends Application{
     private void newMap(){
         imageView.setVisible(true);
         imageView.setImage(new Image("europa.gif"));
+        primaryStage.sizeToScene();
     }
 
     private void openFile(){
 
         try {
+            cities = new ListGraph<>();
+            center.getChildren().retainAll(imageView);
             BufferedReader in = new BufferedReader(new FileReader("europa.graph"));
 
             String line = in.readLine();
             fileName = line;
 
             Image image = new Image(fileName);
+            imageView.setVisible(true);
             imageView.setImage(image);
-            newMap();
+            primaryStage.sizeToScene();
 
             line = in.readLine();
-
-            //VI BEHÖVER FÅ IN CONNECTIONS OCH NAMN PÅ CIRKLARNA HÄR
 
             String[] tokens = line.split(";");
             for (int i = 0; i < tokens.length; i += 3) {
@@ -190,9 +173,11 @@ public class MapFX extends Application{
                 double x = Double.parseDouble(tokens[i + 1]);
                 double y = Double.parseDouble(tokens[i + 2]);
                 CityCircle location = new CityCircle(x, y, name);
+                addName(name,x,y);
                 nodes.put(name, location);
                 cities.add(location);
                 center.getChildren().add(location);
+                allCities.add(location);
                 location.setOnMouseClicked(new ClickHandler());
             }
 
@@ -202,9 +187,17 @@ public class MapFX extends Application{
                 CityCircle to = nodes.get(tokens[1]);
                 String name = tokens[2];
                 int time = Integer.parseInt(tokens[3]);
-                if (cities.getEdgeBetween(from, to) == null)
+
+                if (cities.getEdgeBetween(from, to) == null){
+                    Line test = new Line(from.getCenterX(), from.getCenterY(), to.getCenterX(), to.getCenterY());
+                    test.setStrokeWidth(5);
+                    test.setDisable(true);
+                    center.getChildren().addAll(test);
                     cities.connect(from, to, name, time);
+                }
+
             }
+
         } catch (FileNotFoundException e) {
             System.out.println("File not found.");
         } catch (IOException e) {
@@ -217,7 +210,17 @@ public class MapFX extends Application{
     class openHandler implements EventHandler<ActionEvent> {
         public void handle(ActionEvent e)
         {
-            openFile();
+            if(changes == true){
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Unsaved changes, continue anyway?");
+                Optional<ButtonType>  result = alert.showAndWait();
+
+                if(result.get() == ButtonType.OK){
+                    openFile();
+                }
+            }
+            else{
+                openFile();
+            }
         }
     };
 
@@ -230,24 +233,52 @@ public class MapFX extends Application{
                 BufferedWriter bf = null;
 
                 bf = new BufferedWriter(new FileWriter(file));
-                bf.write(image.getUrl());
+                bf.write(image.getUrl()); //Detta rätt?
                 bf.newLine();
 
                 //HÄR SKA VI FÅ IN RADEN MED STÄDER OCH KORDINATER PÅ NÅGOT SÄTT???
 
+                //VI MÅSTE GÖRA KLART DENNA. OM MAN SPARAR SÅ SKA DET VARA OK ATT STÄNGA PROGRAMMET, OM MAN INTE SPARAT SKA EN ALERT KOMMA UPP
+                //SÅ VI MÅSTE SÄTTA TYP EN BOOLEAN SOM SÄTTS TILL FALSE HÄR OM MAN SPARAR, MEN OM MAN LÄGGER TILL NÅGOT SÅ SKA DEN ÄNDRAS TILL TRUE
+                //CHANGES SKA SÄTTAS TILL FALSE HÄR!
+
+
                 for(CityCircle town : cities.getNodes()) {
+                    //Borde fungera! //bf.write(town + ";" + town.getCenterX() + ";" + town.getCenterY() + ";");
+                    System.out.println(town + ";" + town.getCenterX() + ";" + town.getCenterY() + ";");
+
+                    //Denna ger ett exception om man bara lägger ut städer och inte har någon connection mellan de två!
+
+                    /*
                     if(cities.getEdgeBetween(town, c2) != null) {
                         for(Edge edge : cities.getEdgesFrom(town)) {
                             bf.write(town + ";" + edge);
                             bf.newLine();
                         }
                     }
+                    */
                 }
                 bf.flush();
                 bf.close();
             }
             catch (IOException i) {
                 i.printStackTrace();
+            }
+        }
+    }
+
+    class exitHandler implements EventHandler<ActionEvent>{
+        public void handle(ActionEvent e){
+            if(changes == true){
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Unsaved changes, exit anyway?");
+                Optional<ButtonType>  result = alert.showAndWait();
+
+                if(result.get() == ButtonType.OK){
+                    Platform.exit();
+                }
+            }
+            else{
+                Platform.exit();
             }
         }
     }
@@ -332,6 +363,7 @@ public class MapFX extends Application{
                     Line line = new Line(c1.getCenterX(), c1.getCenterY(), c2.getCenterX(), c2.getCenterY());
                     line.setStrokeWidth(5);
                     center.getChildren().addAll(line);
+                    changes = true;
                 }
             }else {
                 Alert alert = new Alert(Alert.AlertType.ERROR, "Already connected!");
@@ -397,6 +429,8 @@ public class MapFX extends Application{
                 }else {
 
                     cities.setConnectionWeight(c1, c2, dialog.getTime());
+                    changes = true;
+
                 }
             }
         }
@@ -428,6 +462,7 @@ public class MapFX extends Application{
 
             if (result.isPresent()){
                 addCity(result.get(), n,m);
+                addName(result.get(), n,m);
             }
 
             scene.setCursor(Cursor.DEFAULT);
@@ -443,13 +478,18 @@ public class MapFX extends Application{
 
         circle.setFill(BLUE);
         circle.setOnMouseClicked(new ClickHandler());
-        cityCircleArray.add(circle);
 
-        Text cityName = new Text(xCord + 20, yCord + 20, name);
-        cityName.setFont(Font.font("verdana", FontWeight.BOLD, 15));
+        allCities.add(circle);
         cities.add(circle);
+        center.getChildren().addAll(circle);
+        changes = true;
+    }
 
-        center.getChildren().addAll(circle,cityName);
+    public void addName(String name, double xCord, double yCord){
+        Text cityName = new Text(xCord + 20, yCord + 20, name);
+        cityName.setFont(Font.font("verdana", FontWeight.BOLD, 12));
+
+        center.getChildren().addAll(cityName);
     }
 
     //LÄGG TILL CIRKEL

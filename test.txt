@@ -1,1 +1,1 @@
-file:file:/C:/Users/JosefinsDator/OneDrive/Dokument/GitHub/prog2_G96/out/production/Prog2/europa.gif
+file:/C:/Users/fogel/Documents/GitHub/prog2_G96/out/production/Prog2/europa.gif

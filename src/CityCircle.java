@@ -18,6 +18,8 @@ public class CityCircle extends Circle{
     private final String name;
     private boolean selected = false;
 
+    private double x;
+
     public CityCircle(double x, double y,String name){
         super(x,y, 15);
         this.name = name;
