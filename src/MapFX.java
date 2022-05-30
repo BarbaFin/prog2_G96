@@ -57,6 +57,7 @@ public class MapFX extends Application{
     HashMap<String, CityCircle> nodes = new HashMap<>();
     ArrayList<CityCircle> allCities = new ArrayList<>();
     private String fileName;
+    private Boolean saved;
 //Nedan måste ändras till europa.graph:
     final static String outputFilePath = "test.txt";
 
@@ -228,15 +229,11 @@ public class MapFX extends Application{
         public void handle(ActionEvent e) {
             try {
                 File file = new File(outputFilePath);
-                //FileOutputStream fileOut = new FileOutputStream(outputFilePath);
-                //ObjectOutputStream objectOut = new ObjectOutputStream(fileOut);
                 BufferedWriter bf = null;
 
                 bf = new BufferedWriter(new FileWriter(file));
-                bf.write(image.getUrl()); //Detta rätt?
+                bf.write(image.getUrl());
                 bf.newLine();
-
-                //HÄR SKA VI FÅ IN RADEN MED STÄDER OCH KORDINATER PÅ NÅGOT SÄTT???
 
                 //VI MÅSTE GÖRA KLART DENNA. OM MAN SPARAR SÅ SKA DET VARA OK ATT STÄNGA PROGRAMMET, OM MAN INTE SPARAT SKA EN ALERT KOMMA UPP
                 //SÅ VI MÅSTE SÄTTA TYP EN BOOLEAN SOM SÄTTS TILL FALSE HÄR OM MAN SPARAR, MEN OM MAN LÄGGER TILL NÅGOT SÅ SKA DEN ÄNDRAS TILL TRUE
@@ -247,7 +244,6 @@ public class MapFX extends Application{
                     bf.write(town + ";" + town.getCenterX() + ";" + town.getCenterY() + ";");
 
                 }
-                    //System.out.println(town + ";" + town.getCenterX() + ";" + town.getCenterY() + ";");
                 bf.newLine();
                     //Denna ger ett exception om man bara lägger ut städer och inte har någon connection mellan de två!
                     for (CityCircle town : cities.getNodes()) {
