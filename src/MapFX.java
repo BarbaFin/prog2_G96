@@ -244,19 +244,20 @@ public class MapFX extends Application{
 
 
                 for(CityCircle town : cities.getNodes()) {
-                    //Borde fungera! //bf.write(town + ";" + town.getCenterX() + ";" + town.getCenterY() + ";");
-                    System.out.println(town + ";" + town.getCenterX() + ";" + town.getCenterY() + ";");
+                    bf.write(town + ";" + town.getCenterX() + ";" + town.getCenterY() + ";");
 
+                }
+                    //System.out.println(town + ";" + town.getCenterX() + ";" + town.getCenterY() + ";");
+                bf.newLine();
                     //Denna ger ett exception om man bara lägger ut städer och inte har någon connection mellan de två!
-
-                    /*
+                    for (CityCircle town : cities.getNodes()) {
                     if(cities.getEdgeBetween(town, c2) != null) {
                         for(Edge edge : cities.getEdgesFrom(town)) {
                             bf.write(town + ";" + edge);
                             bf.newLine();
                         }
                     }
-                    */
+
                 }
                 bf.flush();
                 bf.close();

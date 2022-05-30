@@ -1,1 +1,3 @@
-file:/C:/Users/fogel/Documents/GitHub/prog2_G96/out/production/Prog2/europa.gif
+file:europa.gif
+Shitty;419.33333333333337;417.33333333333337;Hejdå;524.0;116.0;Hello;247.33333333333331;358.0;
+Hejdå;Shitty;Coonect;33
