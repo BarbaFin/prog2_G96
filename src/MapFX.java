@@ -239,9 +239,9 @@ public class MapFX extends Application{
                 //CHANGES SKA SÄTTAS TILL FALSE HÄR!
 
                 if (cities != null) {
-                    changes == true;
+                    //changes == true;
                 } else {
-                    changes == false;
+                    //changes == false;
                 }
 
 
