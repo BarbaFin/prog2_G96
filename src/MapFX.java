@@ -57,7 +57,6 @@ public class MapFX extends Application{
     HashMap<String, CityCircle> nodes = new HashMap<>();
     ArrayList<CityCircle> allCities = new ArrayList<>();
     private String fileName;
-    private Boolean saved;
 //Nedan måste ändras till europa.graph:
     final static String outputFilePath = "test.txt";
 
@@ -238,6 +237,12 @@ public class MapFX extends Application{
                 //VI MÅSTE GÖRA KLART DENNA. OM MAN SPARAR SÅ SKA DET VARA OK ATT STÄNGA PROGRAMMET, OM MAN INTE SPARAT SKA EN ALERT KOMMA UPP
                 //SÅ VI MÅSTE SÄTTA TYP EN BOOLEAN SOM SÄTTS TILL FALSE HÄR OM MAN SPARAR, MEN OM MAN LÄGGER TILL NÅGOT SÅ SKA DEN ÄNDRAS TILL TRUE
                 //CHANGES SKA SÄTTAS TILL FALSE HÄR!
+
+                if (cities != null) {
+                    changes == true;
+                } else {
+                    changes == false;
+                }
 
 
                 for(CityCircle town : cities.getNodes()) {
