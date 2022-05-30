@@ -181,6 +181,8 @@ public class MapFX extends Application{
 
             line = in.readLine();
 
+            //VI BEHÖVER FÅ IN CONNECTIONS OCH NAMN PÅ CIRKLARNA HÄR
+
             String[] tokens = line.split(";");
             for (int i = 0; i < tokens.length; i += 3) {
                 String name = tokens[i];
