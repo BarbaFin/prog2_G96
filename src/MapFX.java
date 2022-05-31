@@ -292,7 +292,7 @@ public class MapFX extends Application{
 
                 }
                 bf.newLine();
-                
+
                 //Denna ger ett exception om man bara lägger ut städer och inte har någon connection mellan de två!
                 for (CityCircle town : cities.getNodes()) {
 
