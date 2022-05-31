@@ -35,22 +35,32 @@ import static javafx.scene.paint.Color.BLUE;
 
 public class MapFX extends Application{
 
-    private MenuItem saveImage, exit, newMap, open, save;
-
-    private MenuBar menu;
+    private MenuItem saveImage;
+    private MenuItem exit;
+    private MenuItem newMap;
+    private MenuItem open;
+    private MenuItem save;
+    private MenuBar menuBar;
     private Image image;
     private ImageView imageView;
     private Scene scene;
-    private Button newPlaceButton, newConnectionButton, changeConnectionButton, findPathButton,showConnectionButton;
+    private Button newPlaceButton;
+    private Button newConnectionButton;
+    private Button changeConnectionButton;
+    private Button findPathButton;
+    private Button showConnectionButton;
     private VBox vbox;
     private PointerInfo a;
-    private int x,y;
-    private CityCircle c1, c2 = null;
+    private int x;
+    private int y;
+    private CityCircle c1;
+    private CityCircle c2;
     private BorderPane root;
-    private Pane center, top;
+    private Pane center;
+    private Pane top;
     private Stage primaryStage;
 
-    private boolean changes = false;
+    private boolean changes;
     //This is the ONE:
     ListGraph<CityCircle> cities = new ListGraph<>();
 
@@ -58,17 +68,23 @@ public class MapFX extends Application{
     ArrayList<CityCircle> allCities = new ArrayList<>();
     private String fileName;
 //Nedan måste ändras till europa.graph:
-    final static String outputFilePath = "test.txt";
+    private String outputFile = "test.txt";
+
+
 
     @Override
     public void start(Stage primaryStage) {
+        c1 = null;
+        c2 = null;
+        changes = false;
         this.primaryStage = primaryStage;
         vbox = new VBox();
-        menu = new MenuBar();
-        vbox.getChildren().add(menu);
+        menuBar = new MenuBar();
+        menuBar.setId("menu");
+        vbox.getChildren().add(menuBar);
 
         Menu fileMenu = new Menu("File");
-        menu.getMenus().add(fileMenu);
+        menuBar.getMenus().add(fileMenu);
         newMap = new MenuItem("New Map");
         fileMenu.getItems().add(newMap);
 
@@ -199,7 +215,7 @@ public class MapFX extends Application{
             }
 
         } catch (FileNotFoundException e) {
-            FileNotFoundException();
+            //FileNotFoundException();
             //FEL
         } catch (IOException e) {
             e.printStackTrace();
@@ -211,7 +227,7 @@ public class MapFX extends Application{
     class openHandler implements EventHandler<ActionEvent> {
         public void handle(ActionEvent e)
         {
-            if(changes == true){
+            if(changes){
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Unsaved changes, continue anyway?");
                 Optional<ButtonType>  result = alert.showAndWait();
 
@@ -228,7 +244,7 @@ public class MapFX extends Application{
     class saveHandler implements EventHandler<ActionEvent> {
         public void handle(ActionEvent e) {
             try {
-                File file = new File(outputFilePath);
+                File file = new File(outputFile);
                 BufferedWriter bf = null;
 
                 bf = new BufferedWriter(new FileWriter(file));
@@ -272,7 +288,7 @@ public class MapFX extends Application{
 
     class exitHandler implements EventHandler<ActionEvent>{
         public void handle(ActionEvent e){
-            if(changes == true){
+            if(changes){
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Unsaved changes, exit anyway?");
                 Optional<ButtonType>  result = alert.showAndWait();
 
@@ -475,9 +491,9 @@ public class MapFX extends Application{
         }
     }
 
-    public void addCity(String name, double xCord, double yCord){
+    public void addCity(String name, double x, double y){
 
-        CityCircle circle = new CityCircle(xCord,yCord,name);
+        CityCircle circle = new CityCircle(x,y,name);
 
         circle.setFill(BLUE);
         circle.setOnMouseClicked(new ClickHandler());
@@ -488,8 +504,8 @@ public class MapFX extends Application{
         changes = true;
     }
 
-    public void addName(String name, double xCord, double yCord){
-        Text cityName = new Text(xCord + 20, yCord + 20, name);
+    public void addName(String name, double x, double y){
+        Text cityName = new Text(x + 20, y + 20, name);
         cityName.setFont(Font.font("verdana", FontWeight.BOLD, 12));
 
         center.getChildren().addAll(cityName);

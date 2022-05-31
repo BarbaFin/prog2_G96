@@ -9,7 +9,8 @@ public class ShowConnectionDialog extends Alert {
     private static TextField name = new TextField();
     private static TextField time = new TextField();
     private String edgeName;
-    private int edgeTime, nr;
+    private int edgeTime;
+    private int nr;
 
     public ShowConnectionDialog(String c1, String c2, String edgeName, int edgeTime, int nr){
         super(AlertType.CONFIRMATION);

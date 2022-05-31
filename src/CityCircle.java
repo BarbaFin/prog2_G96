@@ -16,7 +16,7 @@ import java.util.Objects;
 
 public class CityCircle extends Circle{
     private final String name;
-    private boolean selected = false;
+    private boolean selected;
 
     private double x;
 
@@ -24,6 +24,7 @@ public class CityCircle extends Circle{
         super(x,y, 15);
         this.name = name;
         setFill(Color.BLUE);
+        selected = false;
     }
     public String getName(){
         return name;
