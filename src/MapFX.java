@@ -36,13 +36,13 @@ import static javafx.scene.paint.Color.BLUE;
 public class MapFX extends Application{
 
     private MenuItem saveImage, exit, newMap, open, save;
+
+    private MenuBar menu;
     private Image image;
     private ImageView imageView;
     private Scene scene;
     private Button newPlaceButton, newConnectionButton, changeConnectionButton, findPathButton,showConnectionButton;
     private VBox vbox;
-
-    private int amount = 0;
     private PointerInfo a;
     private int x,y;
     private CityCircle c1, c2 = null;
@@ -64,11 +64,11 @@ public class MapFX extends Application{
     public void start(Stage primaryStage) {
         this.primaryStage = primaryStage;
         vbox = new VBox();
-        MenuBar menuBar = new MenuBar();
-        vbox.getChildren().add(menuBar);
+        menu = new MenuBar();
+        vbox.getChildren().add(menu);
 
         Menu fileMenu = new Menu("File");
-        menuBar.getMenus().add(fileMenu);
+        menu.getMenus().add(fileMenu);
         newMap = new MenuItem("New Map");
         fileMenu.getItems().add(newMap);
 
@@ -199,7 +199,8 @@ public class MapFX extends Application{
             }
 
         } catch (FileNotFoundException e) {
-            System.out.println("File not found.");
+            FileNotFoundException();
+            //FEL
         } catch (IOException e) {
             e.printStackTrace();
         }
