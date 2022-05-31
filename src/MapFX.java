@@ -30,16 +30,15 @@ import java.util.*;
 import java.io.*;
 import java.util.List;
 
-
 import static javafx.scene.paint.Color.BLUE;
 
 public class MapFX extends Application{
 
-    private MenuItem saveImage;
-    private MenuItem exit;
-    private MenuItem newMap;
-    private MenuItem open;
-    private MenuItem save;
+    private MenuItem menuSaveImage;
+    private MenuItem menuExit;
+    private MenuItem menuNewMap;
+    private MenuItem menuOpen;
+    private MenuItem menuSave;
     private MenuBar menuBar;
     private Image image;
     private ImageView imageView;
@@ -62,21 +61,19 @@ public class MapFX extends Application{
 
     private boolean changes;
     //This is the ONE:
-    ListGraph<CityCircle> cities = new ListGraph<>();
+    private ListGraph<CityCircle> cities = new ListGraph<>();
 
-    HashMap<String, CityCircle> nodes = new HashMap<>();
-    ArrayList<CityCircle> allCities = new ArrayList<>();
-    private String fileName;
-//Nedan måste ändras till europa.graph:
-    private String outputFile = "test.txt";
-
-
+    private HashMap<String, CityCircle> nodes = new HashMap<>();
+    private ArrayList<CityCircle> allCities = new ArrayList<>();
+    private String fileName = "file:europa.gif";
+    //Nedan måste ändras till europa.graph:
+    private String outputFile = "europa.graph";
 
     @Override
     public void start(Stage primaryStage) {
+        changes = false;
         c1 = null;
         c2 = null;
-        changes = false;
         this.primaryStage = primaryStage;
         vbox = new VBox();
         menuBar = new MenuBar();
@@ -85,22 +82,29 @@ public class MapFX extends Application{
 
         Menu fileMenu = new Menu("File");
         menuBar.getMenus().add(fileMenu);
-        newMap = new MenuItem("New Map");
-        fileMenu.getItems().add(newMap);
 
-        open = new MenuItem("Open");
-        fileMenu.getItems().add(open);
+        menuNewMap = new MenuItem("New Map");
+        menuNewMap.setId("menuNewMap");
+        fileMenu.getItems().add(menuNewMap);
 
-        save = new MenuItem("Save");
-        fileMenu.getItems().add(save);
+        menuOpen = new MenuItem("Open");
+        menuOpen.setId("menuOpenFile");
+        fileMenu.getItems().add(menuOpen);
 
-        saveImage = new MenuItem("Save Image");
-        fileMenu.getItems().add(saveImage);
+        menuSave = new MenuItem("Save");
+        menuSave.setId("menuSaveFile");
+        fileMenu.getItems().add(menuSave);
 
-        exit = new MenuItem("Exit");
-        fileMenu.getItems().add(exit);
+        menuSaveImage = new MenuItem("Save Image");
+        menuSaveImage.setId("menuSaveImage");
+        fileMenu.getItems().add(menuSaveImage);
+
+        menuExit = new MenuItem("Exit");
+        menuExit.setId("menuExit");
+        fileMenu.getItems().add(menuExit);
 
         root = new BorderPane();
+        root.setId("outputArea");
         root.setPadding(new Insets(7));
 
         center = new Pane();
@@ -110,22 +114,27 @@ public class MapFX extends Application{
         root.setTop(top);
 
         findPathButton = new Button("Find Path");
+        findPathButton.setId("btnFindPath");
         findPathButton.setLayoutX(10);
         top.getChildren().add(findPathButton);
 
         showConnectionButton = new Button("Show Connection");
+        showConnectionButton.setId("btnShowConnection");
         showConnectionButton.setLayoutX(80);
         top.getChildren().add(showConnectionButton);
 
         newPlaceButton = new Button("New Place");
+        newPlaceButton.setId("btnNewPlace");
         newPlaceButton.setLayoutX(200);
         top.getChildren().add(newPlaceButton);
 
         newConnectionButton = new Button("New Connection");
+        newConnectionButton.setId("btnNewConnection");
         newConnectionButton.setLayoutX(280);
         top.getChildren().add(newConnectionButton);
 
         changeConnectionButton = new Button("Change Connection");
+        changeConnectionButton.setId("btnChangeConnection");
         changeConnectionButton.setLayoutX(400);
         top.getChildren().add(changeConnectionButton);
 
@@ -135,43 +144,70 @@ public class MapFX extends Application{
         imageView = new ImageView(image);
         imageView.setVisible(false);
 
-        newPlaceButton.setOnAction(new newPlaceHandler());
-        newConnectionButton.setOnAction(new connectHandler());
-        showConnectionButton.setOnAction(new showConnectHandler());
-        changeConnectionButton.setOnAction(new changeTimeHandler());
-        findPathButton.setOnAction(new seekPathHandler());
+        newPlaceButton.setOnAction(new NewPlaceHandler());
+        newConnectionButton.setOnAction(new ConnectHandler());
+        showConnectionButton.setOnAction(new ShowConnectHandler());
+        changeConnectionButton.setOnAction(new ChangeTimeHandler());
+        findPathButton.setOnAction(new SeekPathHandler());
 
         center.getChildren().add(imageView);
 
-        exit.setOnAction(new exitHandler());
-        newMap.setOnAction(new newMapHandler());
-        open.setOnAction(new openHandler());
-        save.setOnAction(new saveHandler());
-        saveImage.setOnAction(new saveImageHandler());
+        menuExit.setOnAction(new ExitHandler());
+        menuNewMap.setOnAction(new NewMapHandler());
+        menuOpen.setOnAction(new OpenHandler());
+        menuSave.setOnAction(new SaveHandler());
+        menuSaveImage.setOnAction(new SaveImageHandler());
+
+        primaryStage.setTitle("PathFinder");
 
         scene = new Scene(vbox);
         primaryStage.setScene(scene);
         primaryStage.show();
     }
-    class newMapHandler implements EventHandler<ActionEvent> {
+    class NewMapHandler implements EventHandler<ActionEvent> {
         public void handle(ActionEvent e)
         {
             newMap();
         }
-    };
+    }
 
     private void newMap(){
-        imageView.setVisible(true);
-        imageView.setImage(new Image("europa.gif"));
-        primaryStage.sizeToScene();
+        if(changes){
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Unsaved changes, continue anyway?");
+            Optional<ButtonType>  result = alert.showAndWait();
+
+            if(result.get() == ButtonType.OK){
+                c1 = null;
+                c2 = null;
+                cities = new ListGraph<>();
+                center.getChildren().retainAll(imageView);
+                imageView.setVisible(true);
+                imageView.setImage(new Image(fileName));
+                primaryStage.sizeToScene();
+                changes = true;
+            }
+        }
+        else{
+            c1 = null;
+            c2 = null;
+            cities = new ListGraph<>();
+            center.getChildren().retainAll(imageView);
+            imageView.setVisible(true);
+            imageView.setImage(new Image(fileName));
+            primaryStage.sizeToScene();
+            changes = true;
+        }
     }
 
     private void openFile(){
 
         try {
+            c1 = null;
+            c2 = null;
+            changes = true;
             cities = new ListGraph<>();
             center.getChildren().retainAll(imageView);
-            BufferedReader in = new BufferedReader(new FileReader("europa.graph"));
+            BufferedReader in = new BufferedReader(new FileReader(outputFile));
 
             String line = in.readLine();
             fileName = line;
@@ -224,7 +260,7 @@ public class MapFX extends Application{
 
 
 
-    class openHandler implements EventHandler<ActionEvent> {
+    class OpenHandler implements EventHandler<ActionEvent> {
         public void handle(ActionEvent e)
         {
             if(changes){
@@ -239,9 +275,9 @@ public class MapFX extends Application{
                 openFile();
             }
         }
-    };
+    }
 
-    class saveHandler implements EventHandler<ActionEvent> {
+    class SaveHandler implements EventHandler<ActionEvent> {
         public void handle(ActionEvent e) {
             try {
                 File file = new File(outputFile);
@@ -251,24 +287,15 @@ public class MapFX extends Application{
                 bf.write(image.getUrl());
                 bf.newLine();
 
-                //VI MÅSTE GÖRA KLART DENNA. OM MAN SPARAR SÅ SKA DET VARA OK ATT STÄNGA PROGRAMMET, OM MAN INTE SPARAT SKA EN ALERT KOMMA UPP
-                //SÅ VI MÅSTE SÄTTA TYP EN BOOLEAN SOM SÄTTS TILL FALSE HÄR OM MAN SPARAR, MEN OM MAN LÄGGER TILL NÅGOT SÅ SKA DEN ÄNDRAS TILL TRUE
-                //CHANGES SKA SÄTTAS TILL FALSE HÄR!
-
-                if (cities != null) {
-                    //changes == true;
-                } else {
-                    //changes == false;
-                }
-
-
                 for(CityCircle town : cities.getNodes()) {
                     bf.write(town + ";" + town.getCenterX() + ";" + town.getCenterY() + ";");
 
                 }
                 bf.newLine();
-                    //Denna ger ett exception om man bara lägger ut städer och inte har någon connection mellan de två!
-                    for (CityCircle town : cities.getNodes()) {
+                
+                //Denna ger ett exception om man bara lägger ut städer och inte har någon connection mellan de två!
+                for (CityCircle town : cities.getNodes()) {
+
                     if(cities.getEdgeBetween(town, c2) != null) {
                         for(Edge edge : cities.getEdgesFrom(town)) {
                             bf.write(town + ";" + edge);
@@ -277,6 +304,7 @@ public class MapFX extends Application{
                     }
 
                 }
+                changes = false;
                 bf.flush();
                 bf.close();
             }
@@ -286,7 +314,7 @@ public class MapFX extends Application{
         }
     }
 
-    class exitHandler implements EventHandler<ActionEvent>{
+    class ExitHandler implements EventHandler<ActionEvent>{
         public void handle(ActionEvent e){
             if(changes){
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Unsaved changes, exit anyway?");
@@ -302,7 +330,7 @@ public class MapFX extends Application{
         }
     }
 
-    class saveImageHandler implements EventHandler<ActionEvent> {
+    class SaveImageHandler implements EventHandler<ActionEvent> {
         public void handle(ActionEvent e) {
             try {
                 WritableImage image = imageView.snapshot(null, null);
@@ -316,18 +344,18 @@ public class MapFX extends Application{
     }
 
     //FÖR ATT LÄGGA TILL EN NY STAD PÅ KARTAN
-    class newPlaceHandler implements EventHandler<ActionEvent> {
+    class NewPlaceHandler implements EventHandler<ActionEvent> {
         public void handle(ActionEvent e)
         {
             scene.setCursor(Cursor.CROSSHAIR);
             newPlaceButton.setDisable(true);
 
-            center.setOnMouseClicked(new placeCircleHandler());
+            center.setOnMouseClicked(new PlaceCircleHandler());
         }
-    };
+    }
 
     //VISA CONNECTION
-    class showConnectHandler implements EventHandler<ActionEvent>{
+    class ShowConnectHandler implements EventHandler<ActionEvent>{
         @Override
         public void handle(ActionEvent event) {
             if(c1 == null ||c2 == null){
@@ -351,7 +379,7 @@ public class MapFX extends Application{
     }
 
     //LÄGGA TILL EN CONNECTION, ej klar
-    class connectHandler implements EventHandler<ActionEvent>{
+    class ConnectHandler implements EventHandler<ActionEvent>{
         @Override
         public void handle(ActionEvent event) {
             if(c1 == null ||c2 == null){
@@ -392,7 +420,7 @@ public class MapFX extends Application{
     }
 
     //SE VÄGEN
-    class seekPathHandler implements EventHandler<ActionEvent>{
+    class SeekPathHandler implements EventHandler<ActionEvent>{
         @Override
         public void handle(ActionEvent event) {
             if(c1 == null || c2 == null){
@@ -420,7 +448,7 @@ public class MapFX extends Application{
     }
 
     //ÄNDRA EN CONNECTION TIME
-    class changeTimeHandler implements EventHandler<ActionEvent>{
+    class ChangeTimeHandler implements EventHandler<ActionEvent>{
         @Override
         public void handle(ActionEvent event) {
             if(c1 == null || c2 == null){
@@ -456,7 +484,7 @@ public class MapFX extends Application{
     }
 
     //LÄGG TILL EN STAD
-    class placeCircleHandler implements EventHandler<MouseEvent>{
+    class PlaceCircleHandler implements EventHandler<MouseEvent>{
 
         @Override
         public void handle(MouseEvent event) {
