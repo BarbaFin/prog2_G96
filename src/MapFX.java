@@ -49,7 +49,6 @@ public class MapFX extends Application{
     private Button findPathButton;
     private Button showConnectionButton;
     private VBox vbox;
-    private PointerInfo a;
     private int x;
     private int y;
     private CityCircle c1;
@@ -62,7 +61,6 @@ public class MapFX extends Application{
     private boolean changes;
     //This is the ONE:
     private ListGraph<CityCircle> cities = new ListGraph<>();
-
     private HashMap<String, CityCircle> nodes = new HashMap<>();
     private ArrayList<CityCircle> allCities = new ArrayList<>();
     private String fileName = "file:europa.gif";
@@ -81,6 +79,7 @@ public class MapFX extends Application{
         vbox.getChildren().add(menuBar);
 
         Menu fileMenu = new Menu("File");
+        fileMenu.setId("menuFile");
         menuBar.getMenus().add(fileMenu);
 
         menuNewMap = new MenuItem("New Map");
@@ -104,10 +103,10 @@ public class MapFX extends Application{
         fileMenu.getItems().add(menuExit);
 
         root = new BorderPane();
-        root.setId("outputArea");
         root.setPadding(new Insets(7));
 
         center = new Pane();
+        center.setId("outputArea");
         top = new Pane();
 
         root.setCenter(center);
@@ -231,6 +230,7 @@ public class MapFX extends Application{
                 center.getChildren().add(location);
                 allCities.add(location);
                 location.setOnMouseClicked(new ClickHandler());
+                location.setId(name);
             }
 
             while ((line = in.readLine()) != null) {
@@ -242,6 +242,7 @@ public class MapFX extends Application{
 
                 if (cities.getEdgeBetween(from, to) == null){
                     Line test = new Line(from.getCenterX(), from.getCenterY(), to.getCenterX(), to.getCenterY());
+                    test.setDisable(true);
                     test.setStrokeWidth(5);
                     test.setDisable(true);
                     center.getChildren().addAll(test);
@@ -295,14 +296,12 @@ public class MapFX extends Application{
 
                 //Denna ger ett exception om man bara lägger ut städer och inte har någon connection mellan de två!
                 for (CityCircle town : cities.getNodes()) {
-
                     if(cities.getEdgeBetween(town, c2) != null) {
                         for(Edge edge : cities.getEdgesFrom(town)) {
                             bf.write(town + ";" + edge);
                             bf.newLine();
                         }
                     }
-
                 }
                 changes = false;
                 bf.flush();
@@ -408,6 +407,7 @@ public class MapFX extends Application{
                     cities.connect(c1,c2,name,time);
 
                     Line line = new Line(c1.getCenterX(), c1.getCenterY(), c2.getCenterX(), c2.getCenterY());
+                    line.setDisable(true);
                     line.setStrokeWidth(5);
                     center.getChildren().addAll(line);
                     changes = true;
@@ -488,18 +488,9 @@ public class MapFX extends Application{
 
         @Override
         public void handle(MouseEvent event) {
-            a = MouseInfo.getPointerInfo();
 
-            Point b = a.getLocation();
-            x = (int) b.getX();
-            y = (int) b.getY();
-
-            double n = event.getX();
-            double m = event.getY();
-
-
-            String s = String.valueOf(x);
-            String o = String.valueOf(y);
+            double x = event.getX();
+            double y = event.getY();
 
             TextInputDialog dialog = new TextInputDialog("");
             dialog.setTitle("Name");
@@ -508,8 +499,8 @@ public class MapFX extends Application{
             Optional<String> result = dialog.showAndWait();
 
             if (result.isPresent()){
-                addCity(result.get(), n,m);
-                addName(result.get(), n,m);
+                addCity(result.get(), x,y);
+                addName(result.get(), x,y);
             }
 
             scene.setCursor(Cursor.DEFAULT);
@@ -525,6 +516,8 @@ public class MapFX extends Application{
 
         circle.setFill(BLUE);
         circle.setOnMouseClicked(new ClickHandler());
+
+        circle.setId(name);
 
         allCities.add(circle);
         cities.add(circle);
