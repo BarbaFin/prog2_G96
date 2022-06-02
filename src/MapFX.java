@@ -1,5 +1,4 @@
 import javafx.application.Application;
-import javafx.application.Platform;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -21,9 +20,9 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 import javax.imageio.ImageIO;
-import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.FileNotFoundException;
 import java.util.*;
@@ -32,7 +31,7 @@ import java.util.List;
 
 import static javafx.scene.paint.Color.BLUE;
 
-public class MapFX extends Application{
+public class MapFX extends Application {
 
     private MenuItem menuSaveImage;
     private MenuItem menuExit;
@@ -156,26 +155,43 @@ public class MapFX extends Application{
         menuOpen.setOnAction(new OpenHandler());
         menuSave.setOnAction(new SaveHandler());
         menuSaveImage.setOnAction(new SaveImageHandler());
+        primaryStage.setOnCloseRequest(new ExHandler());
 
         primaryStage.setTitle("PathFinder");
 
         scene = new Scene(vbox);
         primaryStage.setScene(scene);
         primaryStage.show();
+
+
     }
+
+    class ExHandler implements EventHandler<WindowEvent> {
+        @Override
+        public void handle(WindowEvent e) {
+            if (changes) {
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Unsaved changes, exit anyway?");
+                Optional<ButtonType> result = alert.showAndWait();
+
+                if (result.get() == ButtonType.CANCEL) {
+                    e.consume();
+                }
+            }
+        }
+    }
+
     class NewMapHandler implements EventHandler<ActionEvent> {
-        public void handle(ActionEvent e)
-        {
+        public void handle(ActionEvent e) {
             newMap();
         }
     }
 
-    private void newMap(){
-        if(changes){
+    private void newMap() {
+        if (changes) {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Unsaved changes, continue anyway?");
-            Optional<ButtonType>  result = alert.showAndWait();
+            Optional<ButtonType> result = alert.showAndWait();
 
-            if(result.get() == ButtonType.OK){
+            if (result.get() == ButtonType.OK) {
                 c1 = null;
                 c2 = null;
                 cities = new ListGraph<>();
@@ -185,8 +201,7 @@ public class MapFX extends Application{
                 primaryStage.sizeToScene();
                 changes = true;
             }
-        }
-        else{
+        } else {
             c1 = null;
             c2 = null;
             cities = new ListGraph<>();
@@ -198,7 +213,7 @@ public class MapFX extends Application{
         }
     }
 
-    private void openFile(){
+    private void openFile() {
 
         try {
             c1 = null;
@@ -224,7 +239,7 @@ public class MapFX extends Application{
                 double x = Double.parseDouble(tokens[i + 1]);
                 double y = Double.parseDouble(tokens[i + 2]);
                 CityCircle location = new CityCircle(x, y, name);
-                addName(name,x,y);
+                addName(name, x, y);
                 nodes.put(name, location);
                 cities.add(location);
                 center.getChildren().add(location);
@@ -240,7 +255,7 @@ public class MapFX extends Application{
                 String name = tokens[2];
                 int time = Integer.parseInt(tokens[3]);
 
-                if (cities.getEdgeBetween(from, to) == null){
+                if (cities.getEdgeBetween(from, to) == null) {
                     Line test = new Line(from.getCenterX(), from.getCenterY(), to.getCenterX(), to.getCenterY());
                     test.setDisable(true);
                     test.setStrokeWidth(5);
@@ -259,20 +274,16 @@ public class MapFX extends Application{
         }
     }
 
-
-
     class OpenHandler implements EventHandler<ActionEvent> {
-        public void handle(ActionEvent e)
-        {
-            if(changes){
+        public void handle(ActionEvent e) {
+            if (changes) {
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Unsaved changes, continue anyway?");
-                Optional<ButtonType>  result = alert.showAndWait();
+                Optional<ButtonType> result = alert.showAndWait();
 
-                if(result.get() == ButtonType.OK){
+                if (result.get() == ButtonType.OK) {
                     openFile();
                 }
-            }
-            else{
+            } else {
                 openFile();
             }
         }
@@ -288,7 +299,7 @@ public class MapFX extends Application{
                 bf.write(image.getUrl());
                 bf.newLine();
 
-                for(CityCircle town : cities.getNodes()) {
+                for (CityCircle town : cities.getNodes()) {
                     bf.write(town + ";" + town.getCenterX() + ";" + town.getCenterY() + ";");
 
                 }
@@ -296,36 +307,33 @@ public class MapFX extends Application{
 
                 //Denna ger ett exception om man bara lägger ut städer och inte har någon connection mellan de två!
                 for (CityCircle town : cities.getNodes()) {
-                    if(cities.getEdgeBetween(town, c2) != null) {
-                        for(Edge edge : cities.getEdgesFrom(town)) {
-                            bf.write(town + ";" + edge);
+                    for (Edge edge : cities.getEdgesFrom(town)) {
+                        bf.write(town + ";" + edge);
+                        bf.newLine();
+                    }
+                        /*
+                        for(Edge edge : cities.getEdgesFrom(c2)) {
+                            bf.write(c2 + ";" + edge);
                             bf.newLine();
                         }
-                    }
+
+                         */
                 }
+
                 changes = false;
                 bf.flush();
                 bf.close();
-            }
-            catch (IOException i) {
+            } catch (IOException i) {
                 i.printStackTrace();
             }
         }
     }
 
-    class ExitHandler implements EventHandler<ActionEvent>{
-        public void handle(ActionEvent e){
-            if(changes){
-                Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Unsaved changes, exit anyway?");
-                Optional<ButtonType>  result = alert.showAndWait();
+    class ExitHandler implements EventHandler<ActionEvent> {
+        public void handle(ActionEvent e) {
+            primaryStage.fireEvent(new WindowEvent(primaryStage, WindowEvent.WINDOW_CLOSE_REQUEST));
 
-                if(result.get() == ButtonType.OK){
-                    Platform.exit();
-                }
-            }
-            else{
-                Platform.exit();
-            }
+
         }
     }
 
@@ -336,7 +344,7 @@ public class MapFX extends Application{
                 BufferedImage bufferedImage = SwingFXUtils.fromFXImage(image, null);
                 ImageIO.write(bufferedImage, "png", new File("capture.png"));
             } catch (IOException i) {
-                Alert alert = new Alert(Alert.AlertType.ERROR,"IO-fel "+i.getMessage());
+                Alert alert = new Alert(Alert.AlertType.ERROR, "IO-fel " + i.getMessage());
                 alert.showAndWait();
             }
         }
@@ -344,8 +352,7 @@ public class MapFX extends Application{
 
     //FÖR ATT LÄGGA TILL EN NY STAD PÅ KARTAN
     class NewPlaceHandler implements EventHandler<ActionEvent> {
-        public void handle(ActionEvent e)
-        {
+        public void handle(ActionEvent e) {
             scene.setCursor(Cursor.CROSSHAIR);
             newPlaceButton.setDisable(true);
 
@@ -354,20 +361,20 @@ public class MapFX extends Application{
     }
 
     //VISA CONNECTION
-    class ShowConnectHandler implements EventHandler<ActionEvent>{
+    class ShowConnectHandler implements EventHandler<ActionEvent> {
         @Override
         public void handle(ActionEvent event) {
-            if(c1 == null ||c2 == null){
+            if (c1 == null || c2 == null) {
                 Alert alert = new Alert(Alert.AlertType.ERROR, "Mark two cities");
                 alert.showAndWait();
-            } else if (cities.getEdgeBetween(c1,c2) == null) {
+            } else if (cities.getEdgeBetween(c1, c2) == null) {
                 Alert alert = new Alert(Alert.AlertType.ERROR, "No connection between cities!");
                 alert.showAndWait();
             } else {
-                cities.getEdgeBetween(c1,c2);
+                cities.getEdgeBetween(c1, c2);
 
-                String connectionName = cities.getEdgeBetween(c1,c2).getName();
-                int connectionInt = cities.getEdgeBetween(c1,c2).getWeight();
+                String connectionName = cities.getEdgeBetween(c1, c2).getName();
+                int connectionInt = cities.getEdgeBetween(c1, c2).getWeight();
 
                 ShowConnectionDialog dialog = new ShowConnectionDialog(c1.getName(), c1.getName(), connectionName, connectionInt, 1);
                 dialog.setHeaderText("Connection from " + c1.getName() + " to " + c2.getName());
@@ -378,18 +385,18 @@ public class MapFX extends Application{
     }
 
     //LÄGGA TILL EN CONNECTION, ej klar
-    class ConnectHandler implements EventHandler<ActionEvent>{
+    class ConnectHandler implements EventHandler<ActionEvent> {
         @Override
         public void handle(ActionEvent event) {
-            if(c1 == null ||c2 == null){
+            if (c1 == null || c2 == null) {
                 Alert alert = new Alert(Alert.AlertType.ERROR, "Mark two cities");
                 alert.showAndWait();
-            }else if(cities.getEdgeBetween(c1,c2) == null){
+            } else if (cities.getEdgeBetween(c1, c2) == null) {
 
                 ConnectionDialog dialog = new ConnectionDialog();
 
                 Optional<ButtonType> answer = dialog.showAndWait();
-                if(answer.isPresent() && answer.get() != ButtonType.OK){
+                if (answer.isPresent() && answer.get() != ButtonType.OK) {
                     return;
                 }
                 //FUNGERAR INTE
@@ -404,7 +411,7 @@ public class MapFX extends Application{
                     String name = ConnectionDialog.getName();
                     int time = ConnectionDialog.getTime();
 
-                    cities.connect(c1,c2,name,time);
+                    cities.connect(c1, c2, name, time);
 
                     Line line = new Line(c1.getCenterX(), c1.getCenterY(), c2.getCenterX(), c2.getCenterY());
                     line.setDisable(true);
@@ -412,7 +419,7 @@ public class MapFX extends Application{
                     center.getChildren().addAll(line);
                     changes = true;
                 }
-            }else {
+            } else {
                 Alert alert = new Alert(Alert.AlertType.ERROR, "Already connected!");
                 alert.showAndWait();
             }
@@ -420,24 +427,20 @@ public class MapFX extends Application{
     }
 
     //SE VÄGEN
-    class SeekPathHandler implements EventHandler<ActionEvent>{
+    class SeekPathHandler implements EventHandler<ActionEvent> {
         @Override
         public void handle(ActionEvent event) {
-            if(c1 == null || c2 == null){
+            if (c1 == null || c2 == null) {
                 Alert alert = new Alert(Alert.AlertType.ERROR, "Mark two cities!");
                 alert.showAndWait();
-            }
-            if(cities.getPath(c1,c2) == null){
+            } else if (cities.getPath(c1, c2) == null) {
                 Alert alert = new Alert(Alert.AlertType.ERROR, "No path exists!");
                 alert.showAndWait();
-            }
-            if(!cities.pathExists(c1,c2)){
+            } else if (!cities.pathExists(c1, c2)) {
                 Alert alert = new Alert(Alert.AlertType.ERROR, "No connection between cities!");
                 alert.showAndWait();
-            }
-            else {
-
-                List<Edge <CityCircle> > path = cities.getPath(c1,c2);
+            } else {
+                List<Edge<CityCircle>> path = cities.getPath(c1, c2);
                 PathDialog dialog = new PathDialog(path);
                 dialog.setTitle("Message");
 
@@ -448,21 +451,19 @@ public class MapFX extends Application{
     }
 
     //ÄNDRA EN CONNECTION TIME
-    class ChangeTimeHandler implements EventHandler<ActionEvent>{
+    class ChangeTimeHandler implements EventHandler<ActionEvent> {
         @Override
         public void handle(ActionEvent event) {
-            if(c1 == null || c2 == null){
+            if (c1 == null || c2 == null) {
                 Alert alert = new Alert(Alert.AlertType.ERROR, "Mark two cities!");
                 alert.showAndWait();
-            }
-            else if(!cities.pathExists(c1,c2)){
+            } else if (!cities.pathExists(c1, c2)) {
                 Alert alert = new Alert(Alert.AlertType.ERROR, "No connection between cities!");
                 alert.showAndWait();
-            }
-            else {
-                cities.getEdgeBetween(c1,c2);
-                String connectionName = cities.getEdgeBetween(c1,c2).getName();
-                int connectionInt = cities.getEdgeBetween(c1,c2).getWeight();
+            } else {
+                cities.getEdgeBetween(c1, c2);
+                String connectionName = cities.getEdgeBetween(c1, c2).getName();
+                int connectionInt = cities.getEdgeBetween(c1, c2).getWeight();
 
                 ShowConnectionDialog dialog = new ShowConnectionDialog(c1.getName(), c1.getName(), connectionName, connectionInt, 2);
 
@@ -470,11 +471,10 @@ public class MapFX extends Application{
                 dialog.showAndWait();
                 //SE SÅ ATT INT BARA INNEHÅLLER INTS
 
-                if(dialog.getTime() == 0){
+                if (dialog.getTime() == 0) {
                     Alert alert = new Alert(Alert.AlertType.ERROR, "Only numbers over 0 accepted!");
                     alert.showAndWait();
-                }else {
-
+                } else {
                     cities.setConnectionWeight(c1, c2, dialog.getTime());
                     changes = true;
 
@@ -484,8 +484,7 @@ public class MapFX extends Application{
     }
 
     //LÄGG TILL EN STAD
-    class PlaceCircleHandler implements EventHandler<MouseEvent>{
-
+    class PlaceCircleHandler implements EventHandler<MouseEvent> {
         @Override
         public void handle(MouseEvent event) {
 
@@ -498,9 +497,9 @@ public class MapFX extends Application{
             dialog.setContentText("Name of place:");
             Optional<String> result = dialog.showAndWait();
 
-            if (result.isPresent()){
-                addCity(result.get(), x,y);
-                addName(result.get(), x,y);
+            if (result.isPresent()) {
+                addCity(result.get(), x, y);
+                addName(result.get(), x, y);
             }
 
             scene.setCursor(Cursor.DEFAULT);
@@ -510,9 +509,8 @@ public class MapFX extends Application{
         }
     }
 
-    public void addCity(String name, double x, double y){
-
-        CityCircle circle = new CityCircle(x,y,name);
+    public void addCity(String name, double x, double y) {
+        CityCircle circle = new CityCircle(x, y, name);
 
         circle.setFill(BLUE);
         circle.setOnMouseClicked(new ClickHandler());
@@ -525,7 +523,7 @@ public class MapFX extends Application{
         changes = true;
     }
 
-    public void addName(String name, double x, double y){
+    public void addName(String name, double x, double y) {
         Text cityName = new Text(x + 20, y + 20, name);
         cityName.setFont(Font.font("verdana", FontWeight.BOLD, 12));
 
@@ -536,23 +534,23 @@ public class MapFX extends Application{
     class ClickHandler implements EventHandler<MouseEvent> {
         public void handle(MouseEvent e) {
 
-            CityCircle f = (CityCircle)e.getSource();
+            CityCircle f = (CityCircle) e.getSource();
 
-            if(f.isSelected()){
+            if (f.isSelected()) {
                 f.changeSelected(false);
 
                 //När man avmarkerar
-                if(f == c1){
+                if (f == c1) {
                     c1 = null;
-                }else{
+                } else {
                     c2 = null;
                 }
 
-            }else { //När man markerar
-                if(c1 == null){
+            } else { //När man markerar
+                if (c1 == null) {
                     f.changeSelected(true);
                     c1 = f;
-                }else if(c2 == null && f != c1){
+                } else if (c2 == null && f != c1) {
                     f.changeSelected(true);
                     c2 = f;
                 }
