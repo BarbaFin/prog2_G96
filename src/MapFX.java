@@ -63,7 +63,6 @@ public class MapFX extends Application {
     private HashMap<String, CityCircle> nodes = new HashMap<>();
     private ArrayList<CityCircle> allCities = new ArrayList<>();
     private String fileName = "file:europa.gif";
-    //Nedan måste ändras till europa.graph:
     private String outputFile = "europa.graph";
 
     @Override
@@ -305,19 +304,11 @@ public class MapFX extends Application {
                 }
                 bf.newLine();
 
-                //Denna ger ett exception om man bara lägger ut städer och inte har någon connection mellan de två!
                 for (CityCircle town : cities.getNodes()) {
                     for (Edge edge : cities.getEdgesFrom(town)) {
                         bf.write(town + ";" + edge);
                         bf.newLine();
                     }
-                        /*
-                        for(Edge edge : cities.getEdgesFrom(c2)) {
-                            bf.write(c2 + ";" + edge);
-                            bf.newLine();
-                        }
-
-                         */
                 }
 
                 changes = false;
@@ -332,8 +323,6 @@ public class MapFX extends Application {
     class ExitHandler implements EventHandler<ActionEvent> {
         public void handle(ActionEvent e) {
             primaryStage.fireEvent(new WindowEvent(primaryStage, WindowEvent.WINDOW_CLOSE_REQUEST));
-
-
         }
     }
 
@@ -350,7 +339,6 @@ public class MapFX extends Application {
         }
     }
 
-    //FÖR ATT LÄGGA TILL EN NY STAD PÅ KARTAN
     class NewPlaceHandler implements EventHandler<ActionEvent> {
         public void handle(ActionEvent e) {
             scene.setCursor(Cursor.CROSSHAIR);
@@ -360,7 +348,6 @@ public class MapFX extends Application {
         }
     }
 
-    //VISA CONNECTION
     class ShowConnectHandler implements EventHandler<ActionEvent> {
         @Override
         public void handle(ActionEvent event) {
@@ -384,7 +371,6 @@ public class MapFX extends Application {
         }
     }
 
-    //LÄGGA TILL EN CONNECTION, ej klar
     class ConnectHandler implements EventHandler<ActionEvent> {
         @Override
         public void handle(ActionEvent event) {
@@ -399,14 +385,7 @@ public class MapFX extends Application {
                 if (answer.isPresent() && answer.get() != ButtonType.OK) {
                     return;
                 }
-                //FUNGERAR INTE
-                /*else if(ConnectionDialog.getName() == null || ConnectionDialog.getName().contains("[a-zA-Z]+") == false){
-                    Alert alert = new Alert(Alert.AlertType.ERROR, "Must contain a name");
-                    alert.showAndWait();
-                    //SKA IN EN TILL ALERT HÄR
-                }
 
-                 */
                 else {
                     String name = ConnectionDialog.getName();
                     int time = ConnectionDialog.getTime();
@@ -425,8 +404,6 @@ public class MapFX extends Application {
             }
         }
     }
-
-    //SE VÄGEN
     class SeekPathHandler implements EventHandler<ActionEvent> {
         @Override
         public void handle(ActionEvent event) {
@@ -450,7 +427,6 @@ public class MapFX extends Application {
         }
     }
 
-    //ÄNDRA EN CONNECTION TIME
     class ChangeTimeHandler implements EventHandler<ActionEvent> {
         @Override
         public void handle(ActionEvent event) {
@@ -469,7 +445,6 @@ public class MapFX extends Application {
 
                 dialog.setHeaderText("Connection from " + c1.getName() + " to " + c2.getName());
                 dialog.showAndWait();
-                //SE SÅ ATT INT BARA INNEHÅLLER INTS
 
                 if (dialog.getTime() == 0) {
                     Alert alert = new Alert(Alert.AlertType.ERROR, "Only numbers over 0 accepted!");
@@ -477,17 +452,14 @@ public class MapFX extends Application {
                 } else {
                     cities.setConnectionWeight(c1, c2, dialog.getTime());
                     changes = true;
-
                 }
             }
         }
     }
 
-    //LÄGG TILL EN STAD
     class PlaceCircleHandler implements EventHandler<MouseEvent> {
         @Override
         public void handle(MouseEvent event) {
-
             double x = event.getX();
             double y = event.getY();
 
@@ -504,7 +476,6 @@ public class MapFX extends Application {
 
             scene.setCursor(Cursor.DEFAULT);
             newPlaceButton.setDisable(false);
-
             center.setOnMouseClicked(null);
         }
     }
@@ -514,7 +485,6 @@ public class MapFX extends Application {
 
         circle.setFill(BLUE);
         circle.setOnMouseClicked(new ClickHandler());
-
         circle.setId(name);
 
         allCities.add(circle);
@@ -530,7 +500,6 @@ public class MapFX extends Application {
         center.getChildren().addAll(cityName);
     }
 
-    //LÄGG TILL CIRKEL
     class ClickHandler implements EventHandler<MouseEvent> {
         public void handle(MouseEvent e) {
 
@@ -539,14 +508,13 @@ public class MapFX extends Application {
             if (f.isSelected()) {
                 f.changeSelected(false);
 
-                //När man avmarkerar
                 if (f == c1) {
                     c1 = null;
                 } else {
                     c2 = null;
                 }
 
-            } else { //När man markerar
+            } else {
                 if (c1 == null) {
                     f.changeSelected(true);
                     c1 = f;
