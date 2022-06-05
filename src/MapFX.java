@@ -266,8 +266,8 @@ public class MapFX extends Application {
             }
 
         } catch (FileNotFoundException e) {
-            //FileNotFoundException();
-            //FEL
+            Alert alert = new Alert(Alert.AlertType.ERROR, "No file found!");
+            alert.showAndWait();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -502,7 +502,6 @@ public class MapFX extends Application {
 
     class ClickHandler implements EventHandler<MouseEvent> {
         public void handle(MouseEvent e) {
-
             CityCircle f = (CityCircle) e.getSource();
 
             if (f.isSelected()) {
